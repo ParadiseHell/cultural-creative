@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+    <ImageView
+        android:id="@+id/iv_avatar"
+        android:contentDescription="@string/app_name"
+        android:layout_gravity="center"
+        android:layout_width="120dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@mipmap/avatar"/>
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/til_username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <EditText
+            android:hint="@string/et_username"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/til_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/et_password"/>
+    </android.support.design.widget.TextInputLayout>
+    <com.dd.processbutton.iml.ActionProcessButton
+        android:layout_marginTop="5dp"
+        android:textSize="18sp"
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_login"
+        app:pb_textProgress="@string/btn_logining"
+        android:textColor="@android:color/white"
+        app:pb_colorNormal="@android:color/holo_blue_light"
+        app:pb_colorPressed="@android:color/holo_blue_dark" />
+    <view
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        class="android.support.v4.widget.Space"
+        android:id="@+id/view"
+        android:layout_weight="1" />
+</LinearLayout>

@@ -1,0 +1,40 @@
+接口规范:
+服务器返回数据格式:
+{
+ state : true,//状态:true--成功;flase--失败
+ message : "成功",//提示信息
+ data : {},//单个数据
+ dataList : []//数据列表
+}
+
+SQL功能:
+
+用户：
+1.用户注册 userSignUp
+2.会员登陆 userLogin
+3.会员信息修改 userModify
+4.用户查看 userQuery
+
+留言管理:
+1.添加 noteAdd
+2.修改 noteModify
+3.删除 noteDelete
+4.查询 noteQuery
+
+供求管理：
+1.添加 supplyAdd
+2.修改 supplyModify
+3.查询 supplyQuery
+4.删除 supplyDelete
+
+资讯管理：
+1.添加 newsAdd
+2.修改 newsModify
+3.查询 newsQuery
+4.删除 newsDelete
+
+展会管理
+1.添加 exhibitionAdd
+2.修改 exhibitionModify
+3.查询 exhibitionQuery
+4.删除 exhibitionDelete

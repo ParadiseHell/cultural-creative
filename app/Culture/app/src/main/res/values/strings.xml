@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">文化创意</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="et_username">请输入用户名</string>
+    <string name="et_password">请输入密码</string>
+    <string name="tv_welcome">Welcome</string>
+    <string name="btn_login">登录</string>
+    <string name="btn_logining">登录中...</string>
+    <string name="et_host">请输入主机地址</string>
+    <string name="et_port">请输入端口号</string>
+    <string name="tv_host">设置主机地址</string>
+</resources>
