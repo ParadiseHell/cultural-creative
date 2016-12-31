@@ -1,18 +1,14 @@
 package com.chengtao.culture.presenter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import com.chengtao.culture.App;
 import com.chengtao.culture.R;
-import com.chengtao.culture.request.IRequest;
 import com.chengtao.culture.response.IResponse;
 import com.chengtao.culture.utils.SpUtils;
 import com.chengtao.library.entity.BaseResponse;

@@ -3,6 +3,7 @@ package com.chengtao.culture.activity;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.chengtao.culture.App;
 import com.chengtao.culture.R;
@@ -18,13 +19,14 @@ import com.dd.processbutton.iml.ActionProcessButton;
 /**
  * 登录界面
  */
-public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickListener{
+public class LoginActivity extends IActivity implements ILogin ,View.OnClickListener{
     private final static String TITLE = "登录";
     //----------------控件
     private TextInputLayout tilUserName;
     private TextInputLayout tilPassword;
     private ActionProcessButton btnLogin;
     private ImageView ivAvatar;
+    private TextView tvSignUp;
     //---------------Presenter
     private LoginPresenter loginPresenter;
     //---------------其他
@@ -40,6 +42,7 @@ public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickL
         ivAvatar = getView(R.id.iv_avatar);
         tilUserName = getView(R.id.til_username);
         tilPassword = getView(R.id.til_password);
+        tvSignUp = getView(R.id.tv_sign_up);
         btnLogin = getView(R.id.btn_login);
         btnLogin.setMode(ActionProcessButton.Mode.ENDLESS);
         //设置标题
@@ -50,6 +53,7 @@ public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickL
     protected void setListener() {
         btnLogin .setOnClickListener(this);
         ivAvatar.setOnClickListener(this);
+        tvSignUp.setOnClickListener(this);
     }
 
     @Override
@@ -63,18 +67,21 @@ public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickL
     }
 
     @Override
-    public void success(String message) {
+    public void loginSuccess() {
         btnLogin.setProgress(0);
-        showToast(message);
         //跳转登录界面
         MainActivity.invoke(LoginActivity.this);
         finish();
     }
 
     @Override
-    public void fail(String message) {
+    public void loginFail() {
         btnLogin.setProgress(0);
-        showToast(message);
+    }
+
+    @Override
+    public void loginStart() {
+        btnLogin.setProgress(1);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -82,7 +89,6 @@ public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_login:
-                btnLogin.setProgress(1);
                 loginPresenter.login(
                         tilUserName.getEditText().getText().toString(),
                         tilPassword.getEditText().getText().toString());
@@ -93,6 +99,9 @@ public class LoginActivity extends BaseActivity implements ILogin ,View.OnClickL
                     avatarClickNum = 0;
                     loginPresenter.setHost();
                 }
+                break;
+            case R.id.tv_sign_up:
+                SignUpActivity.invoke(LoginActivity.this);
                 break;
         }
     }

@@ -65,7 +65,7 @@ public abstract class IRequest extends AsyncRequest{
                     .method(oldRequest.method(),oldRequest.body());
             //排除登录和注册
             if (!(IRequest.this instanceof LoginRequest)
-                    && !(IRequest.this instanceof SignupRequest)){
+                    && !(IRequest.this instanceof SignUpRequest)){
                 builder.addHeader(USER_NAME,SpUtils.getUserName())
                         .addHeader(USER_PASSWORD,SpUtils.getUserPassword());
             }

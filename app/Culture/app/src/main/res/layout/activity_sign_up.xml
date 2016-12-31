@@ -14,54 +14,51 @@
         android:layout_weight="1"
         android:src="@mipmap/avatar"/>
     <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/til_username"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
-        <EditText
-            android:hint="@string/et_username"
-            android:inputType="text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            />
-    </android.support.design.widget.TextInputLayout>
-    <android.support.design.widget.TextInputLayout
-        android:layout_marginTop="5dp"
-        android:id="@+id/til_password"
+        android:id="@+id/til_user_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <EditText
+            android:inputType="text"
+            android:hint="@string/til_user_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/et_password"/>
+            android:layout_height="wrap_content" />
     </android.support.design.widget.TextInputLayout>
-    <TextView
-        android:padding="5dp"
-        android:text="@string/tv_sign_up"
-        android:textColor="@android:color/holo_blue_light"
-        android:textSize="16sp"
-        android:gravity="end"
-        android:id="@+id/tv_sign_up"
+    <android.support.design.widget.TextInputLayout
+        android:layout_marginTop="5dp"
+        android:id="@+id/til_user_password"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="textPassword"
+            android:hint="@string/til_user_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/til_user_password_again"
+        android:layout_marginTop="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:inputType="textPassword"
+            android:hint="@string/til_user_password_again"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TextInputLayout>
     <com.dd.processbutton.iml.ActionProcessButton
         android:layout_marginTop="5dp"
         android:textSize="18sp"
-        android:id="@+id/btn_login"
+        android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btn_login"
-        app:pb_textProgress="@string/btn_logining"
+        android:text="@string/btn_sign_up"
+        app:pb_textProgress="@string/btn_sign_uping"
         android:textColor="@android:color/white"
         app:pb_colorNormal="@android:color/holo_blue_light"
         app:pb_colorPressed="@android:color/holo_blue_dark" />
-
     <view
+        class="android.support.v4.widget.Space"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        class="android.support.v4.widget.Space"
-        android:id="@+id/view"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
 </LinearLayout>

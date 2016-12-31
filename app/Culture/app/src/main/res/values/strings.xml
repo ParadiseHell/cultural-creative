@@ -13,4 +13,11 @@
     <string name="et_host">请输入主机地址</string>
     <string name="et_port">请输入端口号</string>
     <string name="tv_host">设置主机地址</string>
+    <string name="til_user_name">请输入用户名</string>
+    <string name="til_user_password">请输入密码</string>
+    <string name="til_user_password_again">请确认密码</string>
+    <string name="btn_sign_up">注册</string>
+    <string name="btn_sign_uping">正在注册...</string>
+    <string name="tv_sign_up">这里注册</string>
+    <string name="chengtao">ChengTao</string>
 </resources>
