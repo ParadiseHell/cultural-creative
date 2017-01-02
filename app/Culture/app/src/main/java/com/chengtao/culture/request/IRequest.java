@@ -22,7 +22,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by ChengTao on 2016-12-19.
  */
 
-public abstract class IRequest extends AsyncRequest{
+abstract class IRequest extends AsyncRequest{
     //---------------默认参数
     private static final String USER_NAME = "username";
     private static final String USER_PASSWORD = "password";

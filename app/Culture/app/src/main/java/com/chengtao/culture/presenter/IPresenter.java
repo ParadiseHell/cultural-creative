@@ -1,5 +1,4 @@
 package com.chengtao.culture.presenter;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.TextInputLayout;
@@ -7,7 +6,6 @@ import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-
 import com.chengtao.culture.R;
 import com.chengtao.culture.response.IResponse;
 import com.chengtao.culture.utils.SpUtils;
@@ -21,7 +19,7 @@ import com.chengtao.library.presenter.BasePresenter;
 /**
  * 自定义Presenter
  */
-public abstract class IPresenter extends BasePresenter{
+abstract class IPresenter extends BasePresenter{
     IPresenter(Context context) {
         super(context);
     }
@@ -29,7 +27,7 @@ public abstract class IPresenter extends BasePresenter{
     @Override
     public void onRequestSuccess(int requestId, BaseResponse response) {
         IResponse response1 = (IResponse) response;
-        Log.e("TAG",response1.toString());
+        Log.e("TAG","onRequestSuccess");
         onIRequestSuccess(requestId,response1);
     }
     @Override

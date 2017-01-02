@@ -46,7 +46,7 @@ public class NewsAdapter extends IAdapter<NewsViewHolder>{
         holder.tvNewsTitle.setText(lists.get(position).getNewsTitle());
         holder.tvCompanyName.setText(lists.get(position).getCompanyName());
         holder.tvRead.setText(lists.get(position).getVisitNum()+"");
-        holder.tvTime.setText(lists.get(position).getNewsTime());
+        holder.tvTime.setText(lists.get(position).getNewsTime()+"");
     }
 
     @Override

@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">设置主机</string>
     <string name="et_username">请输入用户名</string>
     <string name="et_password">请输入密码</string>
     <string name="tv_welcome">Welcome</string>

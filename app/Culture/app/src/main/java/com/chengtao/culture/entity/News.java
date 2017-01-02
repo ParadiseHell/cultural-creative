@@ -2,6 +2,7 @@ package com.chengtao.culture.entity;
 
 import com.chengtao.library.entity.BaseResponse;
 
+import java.sql.Date;
 import java.util.List;
 
 /**
@@ -12,7 +13,7 @@ public class News extends BaseResponse{
     private int id;
     private String companyName;
     private String newsTitle;
-    private String newsTime;
+    private long newsTime;
     private String newsDetail;
     private List<String> images;
     private List<Note> notes;
@@ -46,11 +47,11 @@ public class News extends BaseResponse{
         this.newsTitle = newsTitle;
     }
 
-    public String getNewsTime() {
+    public long getNewsTime() {
         return newsTime;
     }
 
-    public void setNewsTime(String newsTime) {
+    public void setNewsTime(long newsTime) {
         this.newsTime = newsTime;
     }
 

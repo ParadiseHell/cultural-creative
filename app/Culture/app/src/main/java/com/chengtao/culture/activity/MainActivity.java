@@ -14,9 +14,11 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import com.chengtao.culture.R;
+import com.chengtao.culture.activityimpl.IMain;
 import com.chengtao.culture.fragment.ExhibitionFragment;
 import com.chengtao.culture.fragment.NewsFragment;
 import com.chengtao.culture.fragment.SupplyDemandFragment;
+import com.chengtao.culture.presenter.MainPresenter;
 import com.chengtao.library.activity.BaseActivity;
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItem;
@@ -24,8 +26,8 @@ import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItemAdapter;
 import com.ogaclejapan.smarttablayout.utils.v4.FragmentPagerItems;
 
 @SuppressWarnings("FieldCanBeLocal")
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends IActivity
+        implements NavigationView.OnNavigationItemSelectedListener,IMain{
     //------------常量
     private final static String TAB_NEWS = "资讯";
     private final static String TAB_EXHIBITION = "展会";
@@ -42,6 +44,8 @@ public class MainActivity extends BaseActivity
     //退出
     private final static long EXIT_TIME = 1500;
     private long currentTime = System.currentTimeMillis();
+    //-----------presenter
+    private MainPresenter mainPresenter;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -85,7 +89,7 @@ public class MainActivity extends BaseActivity
 
     @Override
     protected void initPresenter() {
-
+        mainPresenter = new MainPresenter(mContext,this);
     }
 
     @Override
@@ -108,6 +112,7 @@ public class MainActivity extends BaseActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            mainPresenter.setHost();
             return true;
         }
         return super.onOptionsItemSelected(item);

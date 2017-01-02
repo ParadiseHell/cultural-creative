@@ -8,6 +8,11 @@ import java.util.ArrayList;
  * Created by ChengTao on 2016-12-19.
  */
 
+/**
+ * 响应类
+ * @param <T> 单个数据
+ * @param <E> 数据列表
+ */
 public class IResponse<T,E> extends BaseResponse {
     private boolean state;
     private String message;

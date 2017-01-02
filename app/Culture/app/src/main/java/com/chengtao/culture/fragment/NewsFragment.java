@@ -52,7 +52,8 @@ public class NewsFragment extends IFragment implements INews,RefreshLayout.OnRef
 
     @Override
     protected void initData() {
-        newsPresenter.initData();
+        newsPresenter.initAdapter();
+        newsPresenter.initNews();
     }
 
     @Override

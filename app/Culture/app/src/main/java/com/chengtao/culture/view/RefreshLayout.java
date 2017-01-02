@@ -1,14 +1,11 @@
 package com.chengtao.culture.view;
 
 import android.content.Context;
-import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.chengtao.culture.R;
-import com.lcodecore.tkrefreshlayout.Footer.LoadingView;
 import com.lcodecore.tkrefreshlayout.IBottomView;
 import com.lcodecore.tkrefreshlayout.RefreshListenerAdapter;
 import com.lcodecore.tkrefreshlayout.TwinklingRefreshLayout;
@@ -30,27 +27,25 @@ public class RefreshLayout extends TwinklingRefreshLayout{
 
     public RefreshLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        ProgressLayout header = new ProgressLayout(context);
-        this.setHeaderView(header);
+        this.setHeaderView(new ProgressLayout(context));
         this.setFloatRefresh(true);
-        this.setEnableLoadmore(true);
-        this.setOverScrollBottomShow(false);
         this.setBottomView(new MLoadingView(context));
         this.setOnRefreshListener(new RefreshListenerAdapter() {
-            @Override
-            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
-                if (listener != null){
-                    listener.onRefresh();
-                }
-            }
-
             @Override
             public void onLoadMore(TwinklingRefreshLayout refreshLayout) {
                 if (listener != null){
                     listener.onLoadMore();
                 }
             }
+
+            @Override
+            public void onRefresh(TwinklingRefreshLayout refreshLayout) {
+                if (listener != null){
+                    listener.onRefresh();
+                }
+            }
         });
+
     }
 
     private class MLoadingView extends View implements IBottomView{
