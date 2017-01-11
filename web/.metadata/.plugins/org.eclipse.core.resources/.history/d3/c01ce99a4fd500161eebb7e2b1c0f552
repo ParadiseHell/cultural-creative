@@ -1,0 +1,7 @@
+package com.chengtao.utils;
+
+public class StringUtils {
+	public static boolean isStrNull(String...strings) {
+		
+	}
+}

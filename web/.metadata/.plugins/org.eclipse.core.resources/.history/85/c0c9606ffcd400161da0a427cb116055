@@ -1,0 +1,16 @@
+package com.chengtao.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.chengtao.pool.ConnectionPool;
+
+public class BaseDao {
+	protected Connection getConnection() {
+		try {
+			return ConnectionPool.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}

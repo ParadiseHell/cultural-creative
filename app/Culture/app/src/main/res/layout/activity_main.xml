@@ -14,10 +14,30 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
+        android:background="#EEEEEE"
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:menu="@menu/activity_main_drawer">
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/btn_login"
+            android:textSize="18sp"
+            android:text="@string/btn_login"
+            android:background="#FFFFFF"
+            android:visibility="gone"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <Button
+            android:layout_gravity="bottom"
+            android:id="@+id/btn_logout"
+            android:textSize="18sp"
+            android:text="@string/btn_logout"
+            android:background="#FFFFFF"
+            style="?android:buttonBarButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

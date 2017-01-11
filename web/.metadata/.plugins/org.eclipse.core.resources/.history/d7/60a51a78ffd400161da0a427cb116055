@@ -1,0 +1,33 @@
+package com.chengtao.utils;
+
+public class MD5 {
+
+}
+package com.scholar.utils;
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+public class MD5 {
+	public static final String KEY_MD5 = "MD5";
+
+	public static String getMD5Password(String inputStr) {
+		try {
+			MessageDigest mdAlgorithm = MessageDigest.getInstance("MD5");
+			mdAlgorithm.update(inputStr.getBytes());
+			byte[] digest = mdAlgorithm.digest();
+			StringBuffer hexString = new StringBuffer();
+			for (int i = 0; i < digest.length; i++) {
+				inputStr = Integer.toHexString(0xFF & digest[i]);
+
+			    if (inputStr.length() < 2) {
+			    	inputStr = "0" + inputStr;
+			    }
+			    hexString.append(inputStr);
+			}
+			return hexString.toString();
+		} catch (NoSuchAlgorithmException e1) {
+			return null;
+		}
+	}
+}

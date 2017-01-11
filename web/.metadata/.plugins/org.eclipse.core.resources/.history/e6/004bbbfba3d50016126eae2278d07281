@@ -1,0 +1,33 @@
+package com.chengtao.impl;
+
+import com.chengtao.dao.CompanyUserDao;
+import com.chengtao.entity.CompanyUser;
+
+public class CompanyImpl implements CompanyUserDao{
+	// --------------常量
+		private String ID = "id";
+		private String NAME = "name";
+		private String PASSWORD = "password";
+		private String COMPANY_NAME = "company_name";
+		private String REAL_NAME = "real_name";
+		private String AVATAR = "avatar";
+		private String TYPE = "type";
+		private String EMAIL = "email";
+		private String ADDRESS = "address";
+		private String QQ = "qq";
+		private String TEL = "tel";
+		private String INTRODUCE = "introduce";
+		// --------------存储过程
+		private final static String SIGN_UP = "call companyUserSignUp(?,?)";
+		private final static String LOGIN = "call personUserLogin(?,?)";
+	@Override
+	public CompanyUser signUp(String name, String password) {
+		return null;
+	}
+
+	@Override
+	public CompanyUser login(String name, String password) {
+		return null;
+	}
+
+}

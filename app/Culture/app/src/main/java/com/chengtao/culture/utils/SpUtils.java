@@ -21,6 +21,7 @@ public class SpUtils {
     private static final String USER_SP = "USER_SP";
     private static final String SP_USER_NAME = "SP_USER_NAME";
     private static final String SP_USER_PASSWORD = "SP_USER_PASSWORD";
+    private static final String SP_USER_TYPE = "SP_USER_TYPE";
     /**
      * 保存用户信息
      * @param user 用户实体
@@ -30,8 +31,15 @@ public class SpUtils {
             SharedPreferences preferences = (App.getContext())
                     .getSharedPreferences(USER_SP,Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(SP_USER_NAME,user.getName());
-            editor.putString(SP_USER_PASSWORD,user.getPassword());
+            if (user == null){
+                editor.putString(SP_USER_NAME,"");
+                editor.putString(SP_USER_PASSWORD,"");
+                editor.putInt(SP_USER_TYPE,0);
+            }else {
+                editor.putString(SP_USER_NAME,user.getName());
+                editor.putString(SP_USER_PASSWORD,user.getPassword());
+                editor.putInt(SP_USER_TYPE,user.getType());
+            }
             editor.apply();
         }catch (Exception e){
 
@@ -62,6 +70,20 @@ public class SpUtils {
             return preferences.getString(SP_USER_PASSWORD,"");
         }catch (Exception e){
             return "";
+        }
+    }
+
+    /**
+     * 获取用户
+     * @return 用户名
+     */
+    public static int getUserType(){
+        try {
+            SharedPreferences preferences = App.getContext()
+                    .getSharedPreferences(USER_SP,Context.MODE_PRIVATE);
+            return preferences.getInt(SP_USER_TYPE,0);
+        }catch (Exception e){
+            return 0;
         }
     }
 

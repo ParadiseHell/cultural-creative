@@ -1,0 +1,11 @@
+package com.chengtao.main;
+
+import com.chengtao.dao.PersonUserDao;
+import com.chengtao.factory.DaoFactory;
+
+public class Test {
+	public static void main(String[] args) {
+		PersonUserDao personUserDao = DaoFactory.getPersonUserDao();
+		personUserDao.login("a", "123");
+	}
+}

@@ -9,6 +9,7 @@ import com.chengtao.library.entity.BaseResponse;
 public class User extends BaseResponse {
     private String name;
     private String password;
+    private int type;
     public User(){
 
     }
@@ -38,5 +39,13 @@ public class User extends BaseResponse {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 }

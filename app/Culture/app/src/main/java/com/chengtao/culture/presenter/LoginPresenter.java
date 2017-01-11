@@ -1,6 +1,8 @@
 package com.chengtao.culture.presenter;
 
 import android.content.Context;
+
+import com.chengtao.culture.App;
 import com.chengtao.culture.activityimpl.ILogin;
 import com.chengtao.culture.entity.User;
 import com.chengtao.culture.request.LoginRequest;
@@ -13,7 +15,7 @@ import com.chengtao.culture.utils.StringUtils;
  * Created by ChengTao on 2016-12-19.
  */
 
-public class LoginPresenter extends IPresenter{
+public class LoginPresenter extends IPresenter {
     //----------请求
     @SuppressWarnings("FieldCanBeLocal")
     private LoginRequest loginRequest = null;
@@ -35,11 +37,11 @@ public class LoginPresenter extends IPresenter{
                 if (state){
                     if (message != null){
                         iLogin.tip(message);
-                        iLogin.loginSuccess();
                     }
                     User user = (User) response.getData();
                     //保存用户信息
                     SpUtils.saveUser(user);
+                    iLogin.loginSuccess();
                 }else {
                     if (message != null){
                         iLogin.tip(message);
@@ -76,7 +78,7 @@ public class LoginPresenter extends IPresenter{
         }
         iLogin.loginStart();
         password = MD5.getMD5Password(password);
-        loginRequest = new LoginRequest(getContext(),name,password);
+        loginRequest = new LoginRequest(getContext(),new LoginRequest.LoginParam(name,password));
         loginRequest.setRequestId(LOGIN_REQUEST_ID);
         executeRequest(loginRequest);
     }

@@ -24,10 +24,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 abstract class IRequest extends AsyncRequest{
     //---------------默认参数
-    private static final String USER_NAME = "username";
-    private static final String USER_PASSWORD = "password";
+    private static final String USER_NAME = "userName";
+    private static final String USER_PASSWORD = "userPassword";
     private static final String PLATFORM = "platform";
     private static final String PLATFORM_NAME = "android";
+    private static final String USER_TYPE = "userType";
     IRequest(Context context) {
         super(context);
     }
@@ -67,7 +68,8 @@ abstract class IRequest extends AsyncRequest{
             if (!(IRequest.this instanceof LoginRequest)
                     && !(IRequest.this instanceof SignUpRequest)){
                 builder.addHeader(USER_NAME,SpUtils.getUserName())
-                        .addHeader(USER_PASSWORD,SpUtils.getUserPassword());
+                        .addHeader(USER_PASSWORD,SpUtils.getUserPassword())
+                        .addHeader(USER_TYPE,String.valueOf(SpUtils.getUserType()));
             }
             //创建新的请求
             Request newRequest = builder.build();

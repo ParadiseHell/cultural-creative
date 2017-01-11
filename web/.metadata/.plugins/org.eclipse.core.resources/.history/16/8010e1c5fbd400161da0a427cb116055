@@ -1,0 +1,7 @@
+package com.chengtao.dao;
+
+import java.sql.Connection;
+
+public class BaseDao {
+	
+}

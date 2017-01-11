@@ -1,0 +1,12 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class Exhibition implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6765864021239180677L;
+	
+}

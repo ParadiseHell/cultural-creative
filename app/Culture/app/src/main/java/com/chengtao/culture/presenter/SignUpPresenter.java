@@ -6,23 +6,27 @@ package com.chengtao.culture.presenter;
 
 import android.content.Context;
 
+import com.chengtao.culture.App;
+import com.chengtao.culture.activity.LoginActivity;
 import com.chengtao.culture.activityimpl.ISignUp;
 import com.chengtao.culture.entity.User;
 import com.chengtao.culture.request.SignUpRequest;
 import com.chengtao.culture.response.IResponse;
+import com.chengtao.culture.utils.MD5;
 import com.chengtao.culture.utils.SpUtils;
 import com.chengtao.culture.utils.StringUtils;
 
 /**
  * 注册界面Presenter
  */
-public class SignUpPresenter extends IPresenter{
+public class SignUpPresenter extends IPresenter {
     //-----------页面接口
     private ISignUp iSignUp = null;
     //-----------请求
     @SuppressWarnings("FieldCanBeLocal")
     private SignUpRequest signUpRequest = null;
     private final static int SIGN_UP_ID = 1;
+    private final static String USER_TYPE = "USER_TYPE";
 
     public SignUpPresenter(Context context,ISignUp iSignUp) {
         super(context);
@@ -67,8 +71,9 @@ public class SignUpPresenter extends IPresenter{
      * @param userName 用户面
      * @param userPassword 密码
      * @param userPasswordAgain 确认密码
+     * @param isCompany 是否公司用户
      */
-    public void signUp(String userName,String userPassword,String userPasswordAgain){
+    public void signUp(String userName,String userPassword,String userPasswordAgain,boolean isCompany){
         if (StringUtils.isStrNull(userName)){
             iSignUp.tip("请填写相用户名");
             return;
@@ -86,8 +91,12 @@ public class SignUpPresenter extends IPresenter{
             return;
         }
         iSignUp.signUpStart();
-        User user = new User(userName,userPassword);
-        signUpRequest = new SignUpRequest(getContext(),user);
+        userPassword = MD5.getMD5Password(userPassword);
+        if (isCompany){
+            signUpRequest = new SignUpRequest(getContext(),new SignUpRequest.SignUpParam(userName,userPassword,USER_TYPE));
+        }else {
+            signUpRequest = new SignUpRequest(getContext(),new SignUpRequest.SignUpParam(userName,userPassword,null));
+        }
         signUpRequest.setRequestId(SIGN_UP_ID);
         executeRequest(signUpRequest);
     }

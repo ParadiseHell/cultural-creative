@@ -19,17 +19,29 @@ import retrofit2.http.POST;
  */
 @SuppressWarnings("unchecked")
 public class SignUpRequest extends IRequest{
-    private User user;
-    public SignUpRequest(Context context, User user) {
+    private SignUpParam param;
+    public SignUpRequest(Context context, SignUpParam param) {
         super(context);
-        this.user = user;
+        this.param = param;
     }
     interface SignUpAPI{
-        @POST("user/signUp")
-        Call<IResponse<User,NullObject>> signUp(@Body User user);
+        @POST("/culture/user/signUp")
+        Call<IResponse<User,NullObject>> signUp(@Body SignUpParam param);
     }
     @Override
     public <T extends BaseResponse> Call<T> getCall() {
-        return (Call<T>) retrofit.create(SignUpAPI.class).signUp(user);
+        return (Call<T>) retrofit.create(SignUpAPI.class).signUp(param);
+    }
+
+    public static class SignUpParam{
+        String userName;
+        String userPassword;
+        String userType;
+
+        public SignUpParam(String name, String password,String type) {
+            userName = name;
+            userPassword = password;
+            userType = type;
+        }
     }
 }

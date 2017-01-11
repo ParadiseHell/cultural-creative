@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;com.chengtao.entity.Supplay&apos; to &apos;Supply&apos;&#x0D;&#x0A;- Original project: &apos;CultureAPI&apos;&#x0D;&#x0A;- Original element: &apos;com.chengtao.entity.Supplay&apos;&#x0D;&#x0A;- Renamed element: &apos;com.chengtao.entity.Supply&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Supplay&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;com.chengtao.entity{Supplay.java[Supplay" matchStrategy="1" name="Supply" qualified="false" references="true" similarDeclarations="false" stamp="1484103664211" textual="false" version="1.0"/>
+</session>

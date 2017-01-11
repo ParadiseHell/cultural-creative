@@ -1,0 +1,9 @@
+package com.chengtao.dao;
+
+import java.util.ArrayList;
+
+import com.chengtao.entity.Exhibition;
+
+public interface ExhibitonDao {
+	ArrayList<Exhibition> getAllExhibitions(int limit);
+}

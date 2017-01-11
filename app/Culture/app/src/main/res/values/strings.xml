@@ -20,4 +20,8 @@
     <string name="btn_sign_uping">正在注册...</string>
     <string name="tv_sign_up">这里注册</string>
     <string name="chengtao">ChengTao</string>
+    <string name="person">个人信息</string>
+    <string name="long_text">dskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\ndskfhdskahfs\n\n</string>
+    <string name="cb_company">公司用户？</string>
+    <string name="btn_logout">注销</string>
 </resources>

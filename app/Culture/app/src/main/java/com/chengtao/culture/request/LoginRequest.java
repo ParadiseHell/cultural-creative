@@ -20,19 +20,28 @@ import retrofit2.http.QueryMap;
  */
 
 public class LoginRequest extends IRequest{
-    private User user = null;
-    public LoginRequest(Context context, String name, String password) {
+    private LoginParam param = null;
+    public LoginRequest(Context context, LoginParam param) {
         super(context);
-        user = new User(name,password);
+        this.param = param;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public <T extends BaseResponse> Call<T> getCall() {
-        return (Call<T>) retrofit.create(LoginAPI.class).login(user);
+        return (Call<T>) retrofit.create(LoginAPI.class).login(param);
     }
     interface LoginAPI{
-        @POST("/user/login")
-        Call<IResponse<User,NullObject>> login(@Body User user);
+        @POST("/culture/user/login")
+        Call<IResponse<User,NullObject>> login(@Body LoginParam param);
+    }
+
+    public static class LoginParam{
+        String userName;
+        String userPassword;
+        public LoginParam(String name, String password) {
+            userName = name;
+            userPassword = password;
+        }
     }
 }

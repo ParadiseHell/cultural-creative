@@ -1,0 +1,62 @@
+package com.chengtao.utils;
+
+public class ParamUtils {
+	//---------------Cookies
+	public static final String COOKIES_NAME = "username";
+	public static final String COOKIES_PASSWORD = "password";
+	public static final String COOKIES_TYPE = "usertype";
+	public static final int COOKIES_EXPIRED_TIME = 864000;
+	//---------------Devices
+	public static final String HEAD_PLATFORM = "platform";
+	public static final String HEAD_ANDROID = "android";
+	public static final String HEAD_NAME = "userName";
+	public static final String HEAD_PASSWORD = "userPassword";
+	public static final String HEAD_TYPE = "userType";
+	//---------------View
+	public static final String VIEW_INDEX = "/view/index.jsp";
+	public static final String VIEW_ACTIVITY = "/view/activity.jsp";
+	public static final String VIEW_LOGIN = "/view/login.jsp";
+	public static final String VIEW_USR_INFO = "/view/user.jsp";
+	public static final String VIEW_SIGN_UP = "/view/signup.jsp";
+	//---------------Servlet
+	//USER
+	public static final String SERVLET_USER_INDEX = "/user";
+	public static final String SERVLET_USER_LOGIN = "/user/login";
+	public static final String SERVLET_USER_LOGOUT = "/user/logout";
+	public static final String SERVLET_USER_INFO = "/user/info";
+	public static final String SERVLET_USER_MODIFY = "/user/modify";
+	public static final String SERVLET_USER_SIGNUP = "/user/signUp";
+	public static final String SERVLET_USER_AVATAR = "/user/avator";
+	//ACTIVITY
+	public static final String SERVLET_ACTIVITY = "/activity";
+	//--------------Entity
+	public static final String ENTITY_USER = "ENTITY_USER";
+	public static final String ENTITY_TAB = "ENTITY_TAB";
+	public static final String ENTITY_WEB_TIP = "ENTITY_WEB_TIP";
+	//--------------Attr
+	public static final String ATTR_USER_NAME = "userName";
+	public static final String ATTR_USER_PASSWORD = "userPassword";
+	public static final String ATTR_USER_TYPE = "userType";
+	//-------------FORM
+	public static final String FOREM_USER_ID = "id";
+	public static final String FOREM_USER_NAME = "name";
+	public static final String FOREM_USER_PASSWORD = "password";
+	public static final String FOREM_USER_PASSWORD_AGAIN = "passwordAgain";
+	public static final String FOREM_USER_NICK_NAME = "nickeName";
+	public static final String FOREM_USER_REAL_NAME = "realName";
+	public static final String FOREM_USER_TYPE = "type";
+	public static final String FOREM_USER_AVATAR = "avatar";
+	public static final String FOREM_USER_EMAIL = "email";
+	public static final String FOREM_USER_ADDRESS = "address";
+	public static final String FOREM_USER_QQ = "qq";
+	public static final String FOREM_USER_TEL = "tel";
+	public static final String FOREM_USER_INTRO = "into";
+	public static final String FOREM_USER_COMPANY_NAME = "companyName";
+	//--------------TAB
+	public static final String TAB = "tab";
+	public static final String TAB_NEWS = "news";
+	public static final String TAB_EXHIBITON = "exhibition";
+	public static final String TAB_SUPPLY = "supply";
+	public static final String TAB_DEMAND = "demand";
+	public static final String page = "page";
+}

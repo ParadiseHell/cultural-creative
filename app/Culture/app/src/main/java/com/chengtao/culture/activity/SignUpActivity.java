@@ -8,6 +8,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
+import android.widget.CheckBox;
+
+import com.chengtao.culture.App;
 import com.chengtao.culture.R;
 import com.chengtao.culture.activityimpl.ISignUp;
 import com.chengtao.culture.presenter.SignUpPresenter;
@@ -24,6 +27,7 @@ public class SignUpActivity extends IActivity implements ISignUp,View.OnClickLis
     private TextInputLayout tilUserPassword;
     private TextInputLayout tilUserPasswordAgain;
     private ActionProcessButton btnSignUp;
+    private CheckBox cbCompany;
     //----------Presenter
     private SignUpPresenter signUpPresenter;
     @Override
@@ -39,6 +43,7 @@ public class SignUpActivity extends IActivity implements ISignUp,View.OnClickLis
         btnSignUp = getView(R.id.btn_sign_up);
         btnSignUp.setMode(ActionProcessButton.Mode.ENDLESS);
         btnSignUp.setProgress(0);
+        cbCompany = getView(R.id.cb_company);
         //设置标题
         setTitle(TITLE);
     }
@@ -66,6 +71,7 @@ public class SignUpActivity extends IActivity implements ISignUp,View.OnClickLis
     @Override
     public void signUpSuccess() {
         btnSignUp.setProgress(0);
+        App.destoryActivity(LoginActivity.class.getName());
         MainActivity.invoke(SignUpActivity.this);
         finish();
     }
@@ -82,7 +88,8 @@ public class SignUpActivity extends IActivity implements ISignUp,View.OnClickLis
                 signUpPresenter.signUp(
                         tilUserName.getEditText().getText().toString().trim(),
                         tilUserPassword.getEditText().getText().toString().trim(),
-                        tilUserPasswordAgain.getEditText().getText().toString().trim()
+                        tilUserPasswordAgain.getEditText().getText().toString().trim(),
+                        cbCompany.isChecked()
                 );
                 break;
         }

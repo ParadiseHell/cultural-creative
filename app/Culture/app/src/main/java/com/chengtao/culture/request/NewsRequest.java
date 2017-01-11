@@ -2,6 +2,7 @@ package com.chengtao.culture.request;
 
 import android.content.Context;
 
+import com.chengtao.culture.entity.ListInfo;
 import com.chengtao.culture.entity.News;
 import com.chengtao.culture.entity.NullObject;
 import com.chengtao.culture.response.IResponse;
@@ -16,6 +17,7 @@ import retrofit2.http.POST;
  */
 
 public class NewsRequest extends IRequest{
+    private static final String TAB = "news";
     private NewsParam param;
     public NewsRequest(Context context,NewsParam param) {
         super(context);
@@ -29,16 +31,16 @@ public class NewsRequest extends IRequest{
     }
 
     interface NewsAPI{
-        @POST("/news")
-        Call<IResponse<NullObject,News>>
+        @POST("/culture/activity")
+        Call<IResponse<ListInfo,News>>
         getNews(@Body NewsParam param);
     }
     public static class NewsParam{
-        long date;
-        int type;
-        public NewsParam(long date, int type) {
-            this.date = date;
-            this.type = type;
+        int page;
+        String tab;
+        public NewsParam(int page) {
+            this.page = page;
+            tab = TAB;
         }
     }
 }

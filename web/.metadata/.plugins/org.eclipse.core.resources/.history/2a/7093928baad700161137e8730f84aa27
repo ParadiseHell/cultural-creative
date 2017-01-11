@@ -1,0 +1,18 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+
+public class Exhibition implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6765864021239180677L;
+	private int id;
+	private int companyId;
+	private String title;
+	private String detail;
+	private ArrayList<String> images;
+	private int visit;
+}

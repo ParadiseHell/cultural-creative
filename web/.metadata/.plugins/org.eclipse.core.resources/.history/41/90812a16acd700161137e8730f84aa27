@@ -1,0 +1,7 @@
+package com.chengtao.impl;
+
+import com.chengtao.dao.ExhibitonDao;
+
+public class ExhibitionImpl extends BaseImpl implements ExhibitonDao{
+
+}

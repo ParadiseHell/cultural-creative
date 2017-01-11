@@ -1,0 +1,27 @@
+package com.chengtao.impl;
+
+import java.util.ArrayList;
+
+import com.chengtao.dao.DemandDao;
+import com.chengtao.entity.Demand;
+
+public class DemandImpl extends BaseImpl implements DemandDao{
+	private static final String ID = "";
+	private static final String NAME = "";
+	private static final String DETAIL = "";
+	private static final String IMAGES = "";
+	private static final String CREATE_AT = "";
+	private static final String PUDATE_AT = "";
+	private static final String DEAD_LINE = "";
+	private static final String VISIT = "";
+	private static final String USER_ID	 = "";
+	
+	private static final String GET_ALL_DEMANDS = "";
+	@Override
+	public ArrayList<Demand> getAllDemands(int limit) {
+		ArrayList<Demand> list = new ArrayList<Demand>();
+		
+		return list;
+	}
+
+}

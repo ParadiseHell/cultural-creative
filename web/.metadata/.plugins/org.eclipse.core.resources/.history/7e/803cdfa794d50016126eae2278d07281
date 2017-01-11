@@ -1,0 +1,14 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class WebTip implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6686324181339792978L;
+	private boolean state;
+	private String title;
+	private String message;
+}

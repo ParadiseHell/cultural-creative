@@ -1,0 +1,341 @@
+package com.chengtao.servlet;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.chengtao.dao.CompanyUserDao;
+import com.chengtao.dao.PersonUserDao;
+import com.chengtao.entity.CompanyUser;
+import com.chengtao.entity.PersonUser;
+import com.chengtao.entity.WebTip;
+import com.chengtao.factory.DaoFactory;
+import com.chengtao.utils.ParamUtils;
+import com.chengtao.utils.StringUtils;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+
+/**
+ * Servlet implementation class BaseServlet
+ */
+public class BaseServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	protected static final String JSON = "application/json";
+	private Gson mGson = new GsonBuilder().serializeNulls().create();
+	// ---------------请求和响应
+	protected HttpServletRequest mRequest;
+	protected HttpServletResponse mResponse;
+	// ---------------设备
+	protected boolean isPhone = false;
+	// ---------------DAO
+	protected PersonUserDao personUserDao = DaoFactory.getPersonUserDao();
+	protected CompanyUserDao companyUserDao = DaoFactory.getCompanyUserDao();
+	// USER
+	private static final int PERSON_USER = 0;
+	private static final int COMPANY_USER = 1;
+
+	/**
+	 * Default constructor.
+	 */
+	public BaseServlet() {
+		isPhone = false;
+	}
+
+	/**
+	 * 初始化请求和响应
+	 * 
+	 * @param request
+	 * @param response
+	 * @return
+	 */
+	protected boolean initReqRes(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			mRequest = request;
+			mResponse = response;
+			request.setCharacterEncoding("UTF-8");
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+
+	protected void judgeDevice() {
+		// ------------判断设备
+		String platform = mRequest.getHeader(ParamUtils.HEAD_PLATFORM);
+		if (platform != null) {
+			if (platform.equals(ParamUtils.HEAD_ANDROID)) {
+				isPhone = true;
+			}
+		}
+	}
+
+	/**
+	 * 获取当前用户
+	 * 
+	 * @return 用户
+	 */
+	protected Object getCurrentUser() {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		judgeDevice();
+		// ------------逻辑处理
+		String name = "";
+		String password = "";
+		int type = -1;
+		if (isPhone) {
+			name = mRequest.getHeader(ParamUtils.HEAD_NAME);
+			password = mRequest.getHeader(ParamUtils.HEAD_PASSWORD);
+			try {
+				type = Integer.parseInt(mRequest.getHeader(ParamUtils.HEAD_TYPE));
+			} catch (Exception e) {
+				type = -1;
+			}
+		} else {
+			Cookie nameCookie = null;
+			Cookie passwordCookie = null;
+			Cookie userTypeCookie = null;
+			Cookie cookies[] = mRequest.getCookies();
+			if (cookies != null && cookies.length > 0) {
+				for (Cookie cookie : cookies) {
+					if (cookie.getName().equals(ParamUtils.COOKIES_NAME)) {
+						nameCookie = cookie;
+					} else if (cookie.getName().equals(ParamUtils.COOKIES_PASSWORD)) {
+						passwordCookie = cookie;
+					} else if (cookie.getName().equals(ParamUtils.COOKIES_TYPE)) {
+						userTypeCookie = cookie;
+					}
+				}
+			}
+			if (nameCookie != null && passwordCookie != null && userTypeCookie != null) {
+				name = nameCookie.getValue();
+				password = passwordCookie.getValue();
+				try {
+					type = Integer.parseInt(userTypeCookie.getValue());
+				} catch (Exception e) {
+					type = -1;
+				}
+			}
+		}
+		if (StringUtils.isStrNotNull(name, password)) {
+			switch (type) {
+			case PERSON_USER:
+				personUser = personUserDao.login(name, password);
+				if (personUser != null) {
+					setUserCookies(personUser);
+					mRequest.setAttribute(ParamUtils.ENTITY_USER, personUser);
+					return personUser;
+				}
+				break;
+			case COMPANY_USER:
+				companyUser = companyUserDao.login(name, password);
+				if (companyUser != null) {
+					setUserCookies(companyUser);
+					mRequest.setAttribute(ParamUtils.ENTITY_USER, companyUser);
+					return companyUser;
+				}
+				break;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 重定向到指定Servlet
+	 * 
+	 * @param servletPath
+	 *            servlet路径
+	 * @throws IOException
+	 */
+	protected void sendRedirect(String servletPath) throws IOException {
+		mResponse.sendRedirect(mRequest.getContextPath() + servletPath);
+	}
+
+	/**
+	 * 终止业务逻辑，将数据发给页面
+	 * 
+	 * @param viewPth
+	 *            页面地址
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	protected void endTask(String viewPth) throws ServletException, IOException {
+		mRequest.getRequestDispatcher(viewPth).forward(mRequest, mResponse);
+	}
+
+	/**
+	 * 设置Cookies
+	 * 
+	 * @param name
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @param type
+	 *            类别
+	 */
+	protected void setCookies(Cookie... cookies) {
+		for (Cookie cookie : cookies) {
+			cookie.setMaxAge(ParamUtils.COOKIES_EXPIRED_TIME);
+			cookie.setPath(mRequest.getContextPath());
+			mResponse.addCookie(cookie);
+		}
+	}
+
+	/**
+	 * 清楚用户Cookie
+	 */
+	protected void clearUserCookie() {
+		Cookie cookies[] = mRequest.getCookies();
+		if (cookies != null && cookies.length > 0) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals(ParamUtils.COOKIES_NAME)
+						|| cookie.getName().equals(ParamUtils.COOKIES_PASSWORD)
+						|| cookie.getName().equals(ParamUtils.COOKIES_TYPE)) {
+					cookie.setMaxAge(-1);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 设置用户Cookies
+	 * 
+	 * @param object
+	 */
+	private void setUserCookies(Object object) {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		if (object instanceof PersonUser) {
+			personUser = (PersonUser) object;
+			if (personUser != null) {
+				Cookie nameCookie = new Cookie(ParamUtils.COOKIES_NAME, personUser.getName());
+				Cookie passwordCookie = new Cookie(ParamUtils.COOKIES_PASSWORD, personUser.getPassword());
+				Cookie userTypeCookie = new Cookie(ParamUtils.COOKIES_TYPE, personUser.getType() + "");
+				setCookies(nameCookie, passwordCookie, userTypeCookie);
+			}
+		} else if (object instanceof CompanyUser) {
+			companyUser = (CompanyUser) object;
+			if (companyUser != null) {
+				Cookie nameCookie = new Cookie(ParamUtils.COOKIES_NAME, companyUser.getName());
+				Cookie passwordCookie = new Cookie(ParamUtils.COOKIES_PASSWORD, companyUser.getPassword());
+				Cookie userTypeCookie = new Cookie(ParamUtils.COOKIES_TYPE, companyUser.getType() + "");
+				setCookies(nameCookie, passwordCookie, userTypeCookie);
+			}
+		}
+	}
+
+	/**
+	 * 登录
+	 * 
+	 * @param name
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return 登录用户
+	 */
+	protected Object login(String name, String password) {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		if (StringUtils.isStrNotNull(name, password)) {
+			personUser = personUserDao.login(name, password);
+			if (personUser != null) {
+				mRequest.setAttribute(ParamUtils.ENTITY_USER, personUser);
+				setUserCookies(personUser);
+				return personUser;
+			} else {
+				companyUser = companyUserDao.login(name, password);
+				if (companyUser != null) {
+					mRequest.setAttribute(ParamUtils.ENTITY_USER, companyUser);
+					setUserCookies(companyUser);
+					return companyUser;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 注册
+	 * 
+	 * @param name
+	 *            用户名
+	 * @param password
+	 *            密码
+	 * @return 登录用户
+	 */
+	protected Object signUp(String name, String password, boolean isPersonUser) {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		if (StringUtils.isStrNotNull(name, password)) {
+			if (isPersonUser) {
+				if (personUserDao.login(name, password) == null && companyUserDao.login(name, password) == null) {
+					personUser = personUserDao.signUp(name, password);
+					if (personUser != null) {
+						mRequest.setAttribute(ParamUtils.ENTITY_USER, personUser);
+						setUserCookies(personUser);
+						return personUser;
+					}
+				}
+			} else {
+				if (companyUserDao.login(name, password) == null && personUserDao.login(name, password) == null) {
+					companyUser = companyUserDao.signUp(name, password);
+					if (companyUser != null) {
+						mRequest.setAttribute(ParamUtils.ENTITY_USER, personUser);
+						setUserCookies(companyUser);
+						return companyUser;
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 设置界面提示实体
+	 * 
+	 * @param webTip
+	 */
+	protected void setWebTip(WebTip webTip) {
+		mRequest.setAttribute(ParamUtils.ENTITY_WEB_TIP, webTip);
+	}
+
+	/**
+	 * 返回json字符串
+	 * 
+	 * @param object
+	 *            对象
+	 * @throws IOException
+	 */
+	protected void returnJson(Object object) throws IOException {
+		mResponse.setContentType(JSON);
+		mResponse.setCharacterEncoding("UTF-8");
+		PrintWriter out = mResponse.getWriter();
+		out.print(mGson.toJson(object));
+		out.flush();
+	}
+
+	/**
+	 * 处理Post的JSon数据
+	 * 
+	 * @return
+	 */
+	protected JsonObject handlePostJsonData() {
+		JsonObject object = null;
+		try {
+			JsonElement element = new JsonParser().parse(mRequest.getReader());
+			object = element.getAsJsonObject();
+		} catch (JsonIOException | JsonSyntaxException | IOException e) {
+			e.printStackTrace();
+		}
+		return object;
+	}
+}

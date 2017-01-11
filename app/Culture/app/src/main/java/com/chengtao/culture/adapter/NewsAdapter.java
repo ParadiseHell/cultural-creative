@@ -14,10 +14,6 @@ import java.util.List;
  */
 
 public class NewsAdapter extends IAdapter<NewsViewHolder>{
-    public static final int NONE = 0;
-    public static final int DELETE = 1;
-    public static final int COLLECT = 2;
-
     private List<News> lists;
 
     public NewsAdapter(List<News> lists, Context context) {
@@ -31,11 +27,6 @@ public class NewsAdapter extends IAdapter<NewsViewHolder>{
     }
 
     @Override
-    public int getItemViewType(int position) {
-        return lists.get(position).getOperateType();
-    }
-
-    @Override
     public int getItemCount() {
         return lists.size();
     }
@@ -43,10 +34,26 @@ public class NewsAdapter extends IAdapter<NewsViewHolder>{
     @Override
     public void onBindViewHolder(NewsViewHolder holder, int position) {
         initClickEvent(holder);
-        holder.tvNewsTitle.setText(lists.get(position).getNewsTitle());
-        holder.tvCompanyName.setText(lists.get(position).getCompanyName());
-        holder.tvRead.setText(lists.get(position).getVisitNum()+"");
-        holder.tvTime.setText(lists.get(position).getNewsTime()+"");
+        String title = lists.get(position).getTitle();
+        String companyName = lists.get(position).getCompanyName();
+        String time = lists.get(position).getUpdateAt().toString();
+        String visit = lists.get(position).getVisit()+"";
+        if (title != null){
+            holder.tvNewsTitle.setText(title);
+        }else {
+            holder.tvNewsTitle.setText("");
+        }
+        if (companyName != null){
+            holder.tvCompanyName.setText(companyName);
+        }else {
+            holder.tvCompanyName.setText("");
+        }
+        if (time != null){
+            holder.tvTime.setText(time);
+        }else {
+            holder.tvTime.setText("");
+        }
+        holder.tvRead.setText(visit);
     }
 
     @Override

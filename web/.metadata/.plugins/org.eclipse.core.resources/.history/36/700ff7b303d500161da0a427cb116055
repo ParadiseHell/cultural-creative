@@ -1,0 +1,9 @@
+package com.chengtao.factory;
+
+import com.chengtao.dao.PersonUserDao;
+
+public class DaoFactory {
+	public static PersonUserDao name() {
+		
+	}
+}	

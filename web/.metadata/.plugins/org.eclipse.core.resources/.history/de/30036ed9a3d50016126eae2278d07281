@@ -1,0 +1,18 @@
+package com.chengtao.impl;
+
+import com.chengtao.dao.CompanyUserDao;
+import com.chengtao.entity.CompanyUser;
+
+public class CompanyImpl implements CompanyUserDao{
+
+	@Override
+	public CompanyUser signUp(String name, String password) {
+		return null;
+	}
+
+	@Override
+	public CompanyUser login(String name, String password) {
+		return null;
+	}
+
+}

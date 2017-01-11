@@ -1,5 +1,7 @@
 package com.chengtao.culture.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,8 +103,13 @@ public class LoginActivity extends IActivity implements ILogin ,View.OnClickList
                 }
                 break;
             case R.id.tv_sign_up:
+                App.addDestoryActivity(LoginActivity.class.getName(),this);
                 SignUpActivity.invoke(LoginActivity.this);
                 break;
         }
+    }
+    public static void invoke(Context context){
+        Intent intent = new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
     }
 }

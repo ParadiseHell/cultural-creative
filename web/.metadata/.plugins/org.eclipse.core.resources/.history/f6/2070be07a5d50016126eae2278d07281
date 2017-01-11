@@ -1,0 +1,10 @@
+package com.chengtao.factory;
+
+import com.chengtao.dao.PersonUserDao;
+import com.chengtao.impl.PersonUserImpl;
+
+public class DaoFactory {
+	public static PersonUserDao getPersonUserDao() {
+		return new PersonUserImpl();
+	}
+}	

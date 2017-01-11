@@ -1,0 +1,24 @@
+package com.chengtao.impl;
+
+import java.util.ArrayList;
+
+import com.chengtao.dao.ExhibitonDao;
+import com.chengtao.entity.Exhibition;
+
+public class ExhibitionImpl extends BaseImpl implements ExhibitonDao{
+	private static final String ID = "id";
+	private static final String COMPANY_ID = "id";
+	private static final String TITLE = "id";
+	private static final String CREATE_AT = "id";
+	private static final String UPDATE_AT = "id";
+	private static final String DETAIL = "id";
+	private static final String IMAGES = "id";
+	private static final String VISIT = "id";
+	private static final String GET_ALL_NEWS = "getAllNews(?)";
+	@Override
+	public ArrayList<Exhibition> getAllExhibitions(int limit) {
+		ArrayList<Exhibition> list = new ArrayList<Exhibition>();
+		return list;
+	}
+
+}

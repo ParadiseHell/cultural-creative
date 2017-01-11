@@ -1,0 +1,65 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.chengtao.dao.PersonUserDao;
+import com.chengtao.entity.PersonUser;
+import com.chengtao.utils.MD5;
+
+public class PersonUserImpl extends BaseImpl implements PersonUserDao {
+	// --------------常量
+	private String ID = "id";
+	private String NAME = "name";
+	private String PASSWORD = "password";
+	private String TYPE = "type";
+	//--------------存储过程
+	private final static String SIGN_UP = "call personUserSignUp(?,?)";
+	private final static String LOGIN = "call personUserLogin(?,?)";
+
+	@Override
+	public PersonUser signUp(String name, String password) {
+		PersonUser user = null;
+		password = MD5.getMD5Password(password);
+		ResultSet set = getResultSet(SIGN_UP, name, password);
+		try {
+			if (set != null && set.next()) {
+				user = new PersonUser();
+				user.setId(set.getInt(ID));
+				user.setName(set.getNString(NAME));
+				user.setPassword(set.getString(PASSWORD));
+			}
+		} catch (SQLException e) {
+			printException("signUp", e);
+		}
+		return user;
+	}
+
+	@Override
+	public PersonUser login(String name, String password) {
+		PersonUser user = null;
+		password = MD5.getMD5Password(password);
+		ResultSet set = getResultSet(LOGIN, name, password);
+		
+		return user;
+	}
+	/**
+	 * 获取基本的用户信息
+	 * @param set
+	 * @return
+	 */
+	private PersonUser getBaseUser(ResultSet set){
+		PersonUser user = null;
+		try {
+			if (set != null && set.next()) {
+				user = new PersonUser();
+				user.setId(set.getInt(ID));
+				user.setName(set.getNString(NAME));
+				user.setPassword(set.getString(PASSWORD));
+			}
+		} catch (SQLException e) {
+			printException("login", e);
+		}
+		return user;
+	}
+}

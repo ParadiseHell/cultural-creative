@@ -1,0 +1,408 @@
+package com.chengtao.servlet;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+
+import com.chengtao.entity.CompanyUser;
+import com.chengtao.entity.MoblieResponse;
+import com.chengtao.entity.NullObject;
+import com.chengtao.entity.PersonUser;
+import com.chengtao.entity.WebTip;
+import com.chengtao.utils.MD5;
+import com.chengtao.utils.ParamUtils;
+import com.chengtao.utils.StringUtils;
+import com.google.gson.JsonObject;
+
+/**
+ * Servlet implementation class PersonUserServlet
+ */
+@WebServlet("/user/*")
+public class UserServlet extends BaseServlet {
+	private static final long serialVersionUID = 1L;
+	// 上传配置
+	private static final String AVATAR_PATH = "/upload/images";
+    private static final int MEMORY_THRESHOLD   = 1024 * 1024 * 3;  // 3MB
+    
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public UserServlet() {
+		super();
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (initReqRes(request, response)) {
+			response.setCharacterEncoding("UTF-8");
+			if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_LOGIN)) {// 登录
+				userLogin();
+			} else if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_LOGOUT)) {// 注销
+				clearUserCookie();
+				endTask(ParamUtils.VIEW_LOGIN);
+			} else if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_SIGNUP)) {// 注册
+				userSignUp();
+			} else if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_INFO)) {//个人信息
+				getCurrentUser();
+				endTask(ParamUtils.VIEW_USR_INFO);
+			}else if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_MODIFY)) {//信息修改
+				modifyUserInfo();
+			}else if (request.getRequestURI().contains(ParamUtils.SERVLET_USER_AVATAR)) {//上传头像
+				uploadUserAvatar();
+			}
+			else {
+				sendRedirect(ParamUtils.SERVLET_ACTIVITY);
+			}
+		}
+	}
+	/**
+	 * 上传图片
+	 * @throws IOException 
+	 * @throws ServletException 
+	 */
+	private void uploadUserAvatar() throws IOException, ServletException {
+		int id = 0;
+		int type = 0;
+		String avatarPath = "";
+		boolean isSuccess = true;
+		Object object = getCurrentUser();
+		File oldAvatar = null;
+		String oldAvatarPath = null;
+		if (object instanceof CompanyUser) {
+			oldAvatarPath = ((CompanyUser)object).getAvatar();
+		}else if(object instanceof PersonUser){
+			oldAvatarPath = ((PersonUser)object).getAvatar();
+		}
+		if (oldAvatarPath != null && !oldAvatarPath.equals("")) {
+			String fileName = oldAvatarPath.substring(oldAvatarPath.lastIndexOf(File.separator ));
+			oldAvatar = new File(getServletContext().getRealPath("./") + File.separator  + AVATAR_PATH + fileName);
+		}
+		if (isPhone) {
+			if (isSuccess) {
+				if (oldAvatar != null) {
+					oldAvatar.delete();
+				}
+			}
+		}else {
+			try {
+				id = Integer.parseInt(mRequest.getParameter(ParamUtils.FOREM_USER_ID));
+				type = Integer.parseInt(mRequest.getParameter(ParamUtils.FOREM_USER_TYPE));
+			} catch (Exception e) {
+				id = 0;
+				type = 0;
+			}
+			DiskFileItemFactory factory = new DiskFileItemFactory();
+			factory.setSizeThreshold(MEMORY_THRESHOLD);
+			factory.setRepository(new File(System.getProperty("java.io.tmpdir")));
+			ServletFileUpload upload = new ServletFileUpload(factory);
+			String uploadPath = getServletContext().getRealPath("./") + File.separator  + AVATAR_PATH;
+			File uploadDir = new File(AVATAR_PATH);
+			if (!uploadDir.exists()) {
+				uploadDir.mkdirs();
+			}
+			try {
+				List<FileItem> formItems = upload.parseRequest( mRequest);
+				if (formItems != null && formItems.size() > 0) {
+					for (FileItem item : formItems) {
+						if (!item.isFormField()) {
+							String fileName = new File(item.getName()).getName();
+							String realPath =  System.currentTimeMillis() + fileName.substring(fileName.lastIndexOf("."));
+	                        String filePath = uploadPath + File.separator + realPath;
+	                        File storeFile = new File(filePath);
+	                        item.write(storeFile);
+	                        avatarPath = mRequest.getContextPath() + AVATAR_PATH + File.separator + realPath;
+						}
+					}
+				}
+			} catch (Exception e) {
+				isSuccess = false;
+				setWebTip(new WebTip(false, "上传图片失败", "上传图片失败"));
+				endTask(ParamUtils.VIEW_USR_INFO);
+			}
+			switch (type) {
+			case PERSON_USER:
+				if (personUserDao.uploadAvatar(id, avatarPath)) {
+					setWebTip(new WebTip(false, "上传图片成功", "上传图片成功"));
+				}else {
+					setWebTip(new WebTip(false, "上传图片失败", "上传图片失败"));
+					isSuccess = false;
+				}
+				break;
+			case COMPANY_USER:
+				if (companyUserDao.uploadAvatar(id, avatarPath)) {
+					setWebTip(new WebTip(false, "上传图片成功", "上传图片成功"));
+				}else {
+					setWebTip(new WebTip(false, "上传图片失败", "上传图片失败"));
+					isSuccess = false;
+				}
+				break;
+			}
+			if (isSuccess) {
+				if (oldAvatar != null) {
+					oldAvatar.delete();
+				}
+			}
+			getCurrentUser();
+			endTask(ParamUtils.VIEW_USR_INFO);
+		}
+	}
+	/**
+	 * 修改用户信息
+	 */
+	@SuppressWarnings("unused")
+	private void modifyUserInfo() {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		boolean isSuccess = true;
+		if (getCurrentUser() != null) {
+			switch (initUser(personUser,companyUser)) {
+			case PERSON_USER:
+				if (personUser != null) {
+					setUserCookies(personUser);
+					setWebTip(new WebTip(true,"修改信息成功","修改信息成功"));
+				}
+				break;
+			case COMPANY_USER:
+				if (companyUser != null) {
+					setUserCookies(companyUser);
+					setWebTip(new WebTip(true,"修改信息成功","修改信息成功"));
+				}
+				break;
+			default:
+				isSuccess = false;
+				setWebTip(new WebTip(true,"修改信息成功","修改信息成功"));
+				break;
+			}
+		}else {
+			isSuccess = false;
+			if (!isPhone) {
+				
+			}
+			setWebTip(new WebTip(true,"修改信息成功","修改信息成功"));
+		}
+	}
+
+	private int initUser(PersonUser personUser, CompanyUser companyUser) {
+		int id = 0;
+		int type = -1;
+		String name = null;
+		String passwword = null;
+		String nickName = null;
+		String companyName = null;
+		String realName = null;
+		String email = null;
+		String qq = null;
+		String tel = null;
+		String address = null;
+		String intro = null;
+		if (isPhone) {
+			
+		}else {
+			try {
+				id = Integer.parseInt(mRequest.getParameter(ParamUtils.FOREM_USER_ID));
+			} catch (Exception e) {
+				id = 0;
+			}
+			try {
+				type = Integer.parseInt(mRequest.getParameter(ParamUtils.FOREM_USER_TYPE));
+			} catch (Exception e) {
+				type = -1;
+			}
+			if (id != 0 && type != -1) {
+				name = mRequest.getParameter(ParamUtils.FOREM_USER_NAME);
+				passwword = mRequest.getParameter(ParamUtils.FOREM_USER_PASSWORD);
+				nickName = mRequest.getParameter(ParamUtils.FOREM_USER_NICK_NAME);
+				companyName = mRequest.getParameter(ParamUtils.FOREM_USER_COMPANY_NAME);
+				email = mRequest.getParameter(ParamUtils.FOREM_USER_EMAIL);
+				qq = mRequest.getParameter(ParamUtils.FOREM_USER_QQ);
+				tel = mRequest.getParameter(ParamUtils.FOREM_USER_TEL);
+				address = mRequest.getParameter(ParamUtils.FOREM_USER_ADDRESS);
+				intro = mRequest.getParameter(ParamUtils.FOREM_USER_INTRO);
+				if (type == PERSON_USER) {
+					PersonUser pUser = new PersonUser(id,name,passwword,nickName,realName,null,email,address,qq,tel,intro,type);
+					personUser = personUserDao.modify(pUser);
+				}else {
+					CompanyUser cUser = new CompanyUser(id,name,passwword,nickName,companyName,null,email,address,qq,tel,intro,type);
+					companyUser = companyUserDao.modify(cUser);
+				}
+			}
+		}
+		return type;
+	}
+
+	/**
+	 * 用户注册
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void userSignUp() throws IOException, ServletException {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		StringBuffer name = new StringBuffer();
+		StringBuffer password = new StringBuffer();
+		// 初始化用户名和密码
+		boolean state = initNameAndPassword(name, password);
+		Object object = signUp(name.toString(), password.toString(), state);
+		handleSignUpOrLogin(personUser, companyUser, object, "注册成功", "注册失败", ParamUtils.VIEW_SIGN_UP);
+	}
+
+	/**
+	 * 用户登录
+	 * 
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void userLogin() throws IOException, ServletException {
+		PersonUser personUser = null;
+		CompanyUser companyUser = null;
+		StringBuffer name = new StringBuffer();
+		StringBuffer password = new StringBuffer();
+		// 初始化用户名和密码
+		initNameAndPassword(name, password);
+		// 登录
+		Object object = login(name.toString(), password.toString());
+		handleSignUpOrLogin(personUser, companyUser, object, "登录成功", "登录失败", ParamUtils.VIEW_LOGIN);
+	}
+
+	@SuppressWarnings("unused")
+	/**
+	 * 处理登录注册和登录
+	 * 
+	 * @param personUser
+	 *            个人用户
+	 * @param companyUser
+	 *            企业用户
+	 * @param object
+	 *            用户对象
+	 * @param successMessage
+	 *            成功消息
+	 * @param failMessage
+	 *            失败消息
+	 * @param path
+	 *            界面地址
+	 * @throws IOException
+	 * @throws ServletException
+	 */
+	private void handleSignUpOrLogin(PersonUser personUser, CompanyUser companyUser, Object object,
+			String successMessage, String failMessage, String path) throws IOException, ServletException {
+		if (object != null) {
+			if (object instanceof PersonUser) {// 个人用户
+				personUser = (PersonUser) object;
+				if (isPhone) {
+					MoblieResponse<PersonUser, NullObject> moblieResponse = new MoblieResponse<>();
+					if (personUser != null) {
+						moblieResponse.setState(true);
+						moblieResponse.setMessage(successMessage);
+					} else {
+						moblieResponse.setState(false);
+						moblieResponse.setMessage(failMessage);
+					}
+					moblieResponse.setData(personUser);
+					returnJson(moblieResponse);
+				} else {
+					if (personUser != null) {
+						setWebTip(new WebTip(true, successMessage, successMessage + "啦~~"));
+					} else {
+						setWebTip(new WebTip(false, failMessage, failMessage + ",再试试吧~~"));
+					}
+					endTask(path);
+				}
+			} else if (object instanceof CompanyUser) {// 企业用户
+				companyUser = (CompanyUser) object;
+				if (isPhone) {
+					MoblieResponse<CompanyUser, NullObject> moblieResponse = new MoblieResponse<>();
+					if (companyUser != null) {
+						moblieResponse.setState(true);
+						moblieResponse.setMessage(successMessage);
+					} else {
+						moblieResponse.setState(false);
+						moblieResponse.setMessage(failMessage);
+					}
+					moblieResponse.setData(companyUser);
+					returnJson(moblieResponse);
+				} else {
+					if (companyUser != null) {
+						setWebTip(new WebTip(true, successMessage, successMessage + "啦~~"));
+					} else {
+						setWebTip(new WebTip(false, failMessage, failMessage + ",再试试吧~~"));
+					}
+					endTask(path);
+				}
+			}
+		} else {
+			if (isPhone) {
+				MoblieResponse<NullObject, NullObject> moblieResponse = new MoblieResponse<>();
+				moblieResponse.setState(false);
+				moblieResponse.setMessage(failMessage);
+				returnJson(moblieResponse);
+			} else {
+				setWebTip(new WebTip(false, failMessage, failMessage + ",再试试吧~~"));
+				endTask(path);
+			}
+		}
+	}
+
+	/**
+	 * 初始胡用户名和密码
+	 * 
+	 * @param name
+	 * @param password
+	 * @return 是否企业用户
+	 */
+	private boolean initNameAndPassword(StringBuffer name, StringBuffer password) {
+		// 判断设备
+		judgeDevice();
+		String type = null;
+		if (isPhone) {
+			JsonObject object = handlePostJsonData();
+			String n = object.get(ParamUtils.ATTR_USER_NAME).toString();
+			n = n.replace("\"", "");
+			name.append(n);
+			String p = object.get(ParamUtils.ATTR_USER_PASSWORD).toString();
+			p = p.replace("\"", "");
+			password.append(p);
+			try {
+				type = object.get(ParamUtils.ATTR_USER_TYPE).toString();
+			} catch (Exception e) {
+				type = null;
+			}
+		} else {
+			String n = mRequest.getParameter(ParamUtils.ATTR_USER_NAME);
+			name.append(n);
+			String p = mRequest.getParameter(ParamUtils.ATTR_USER_PASSWORD);
+			p = MD5.getMD5Password(p);
+			password.append(p);
+			type = mRequest.getParameter(ParamUtils.ATTR_USER_TYPE);
+		}
+		if (!StringUtils.isStrNotNull(name.toString(), password.toString())) {
+			name.append("");
+			password.append("");
+		}
+		return type == null;
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
+
+}

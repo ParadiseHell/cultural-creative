@@ -13,4 +13,12 @@ public class StringUtils {
         }
         return false;
     }
+
+    public static String getNotNullString(String s){
+        if (isStrNull(s)){
+            return "";
+        }else {
+            return s;
+        }
+    }
 }

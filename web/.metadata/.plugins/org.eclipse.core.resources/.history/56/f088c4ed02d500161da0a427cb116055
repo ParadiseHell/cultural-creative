@@ -1,0 +1,9 @@
+package com.chengtao.dao;
+
+import com.chengtao.entity.PersonUser;
+
+public interface PersonUserDao {
+	String USER_ID = "id";
+	PersonUser signUp(String name,String password);
+	PersonUser login(String name,String password);
+}

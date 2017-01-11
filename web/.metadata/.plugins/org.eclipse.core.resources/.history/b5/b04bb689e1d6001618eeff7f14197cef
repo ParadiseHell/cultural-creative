@@ -1,0 +1,8 @@
+package com.chengtao.entity;
+
+public enum UserType {
+	PersonUser = 1,
+	CompanyUser,
+	Admin,
+	Visitor
+}

@@ -1,0 +1,16 @@
+package com.chengtao.impl;
+
+import java.util.ArrayList;
+
+import com.chengtao.dao.SupplyDao;
+import com.chengtao.entity.Supply;
+
+public class SupplyImpl extends BaseImpl implements SupplyDao{
+
+	@Override
+	public ArrayList<Supply> getAllSupplys(int limit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

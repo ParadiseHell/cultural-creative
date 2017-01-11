@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="culture">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="CultureAPI.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/CultureAPI/CultureAPI">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mchange-commons-java-0.2.10.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/Study/Course/数据库/ex4/jar/mchange-commons-java-0.2.10.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="mysql-connector-java-5.1.40-bin.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/Study/Course/数据库/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40/mysql-connector-java-5.1.40-bin.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="c3p0-0.9.5.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/Study/Course/数据库/ex4/jar/c3p0-0.9.5.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gson-2.7.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/D:/Study/School/software/gson-2.7.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="culture"/>
+        <property name="java-output-path" value="/culture/build/classes"/>
+    </wb-module>
+</project-modules>

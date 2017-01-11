@@ -14,15 +14,13 @@
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"
         android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:src="@mipmap/ct" />
+        android:layout_height="72dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:textSize="18sp"
-        android:id="@+id/tv_nick_name"
-        android:text="@string/chengtao"
+        android:id="@+id/tv_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 </LinearLayout>

@@ -1,0 +1,13 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class MoblieResponse<T,E> implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2566478208749870513L;
+	
+
+}

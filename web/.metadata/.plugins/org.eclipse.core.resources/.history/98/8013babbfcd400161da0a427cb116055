@@ -1,0 +1,51 @@
+package com.chengtao.dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import com.chengtao.pool.ConnectionPool;
+
+public class BaseDao {
+	protected Connection getConnection() {
+		try {
+			return ConnectionPool.getConnection();
+		} catch (SQLException e) {
+			printStr(e.getMessage());
+			return null;
+		}
+	}
+	protected void printStr(String s) {
+		if (!(s == null || s.equals(""))) {
+			System.out.println(s);
+		}
+	}
+	/**
+	 * ¹Ø±Õ×ÊÔ´
+	 * @param set ResultSet
+	 * @param statement Statement
+	 * @param connection Connection
+	 */
+	protected void close(ResultSet set, Statement statement,Connection connection){
+		if (set != null) {
+			try {
+				set.close();
+			} catch (SQLException e) {
+				printException("close",e);
+			}
+		}
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				printException("close",e);
+			}
+		}
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				printException("close",e);
+			}
+		}
+	}
+}

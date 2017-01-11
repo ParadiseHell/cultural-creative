@@ -1,0 +1,6 @@
+package com.chengtao.dao;
+
+public interface PersonUserDao {
+	PersonUser signUp(String name,String password);
+	PersonUser login(String name,String password);
+}

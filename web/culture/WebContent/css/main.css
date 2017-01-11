@@ -1,0 +1,121 @@
+@media (max-width: 992px){
+	div.big-image{
+		display: none;
+	}
+	div.scholar-form{
+		padding-left : 30px;
+	}
+}
+body{
+	min-width: 400px;
+}
+div.container-bg{
+	padding-left : 0px;
+}
+div.row-bg{
+	margin-left : -15px;
+}
+div.scholar-form{
+	margin-top: 60px;
+}
+div.scholar-form div.form-grop a{
+	display: block;
+	text-align: right;
+	margin-right: 15px;
+}
+div.scholar-form button{
+	margin-top: 5px;
+}
+/* validate */
+label.error{
+	color: #FF0000;
+	margin-top:5px;
+}
+
+div.main_bar{
+	border: 0px;
+}
+div.navbar-header a{
+	font-weight: bold;
+}
+p.name{
+	margin-top: 5px;
+	font-size: 30px;
+	font-weight: bold;
+}
+div.user-main{
+	margin-top: 70px;
+}
+div.user-main button.meeting{
+	text-align: left;
+	border: 0px;
+}
+div.user-main button.meeting span{
+	float: right;
+	margin-top: 2px;
+}
+
+div#scholar-tab-content ul{
+	padding: 0px;
+}
+
+div#scholar-tab-content ul > li{
+	list-style: none;
+}
+
+div#scholar-tab-content ul > li > a{
+	cursor: pointer;
+	display: block;
+	border: 1px;
+	border-radius: 5px;
+	margin-top: 5px;
+	color: #000000;
+	text-decoration: none;
+	padding: 5px;
+	width: 100%;
+	height: auto;
+}
+div#scholar-tab-content ul > li > a:hover{
+	background-color: #f0f0f0;
+}
+div#scholar-tab-content ul > li > a > dl{
+	color: inherit;
+	margin-bottom: 0px;
+}
+div#scholar-tab-content ul > li > a > dl >dt{
+	font-size: 20px !important;
+	font-weight: bold;
+}
+div.media img{
+	width : 80px;
+	height : 80px;
+}
+div.media h3{
+	margin-top : 5px;
+}
+div.user-main div.user-left{
+	margin-bottom : 10px;
+}
+
+
+div.modal-body{
+	overflow: hidden;
+}
+div.modal-body p{
+	color : #FF0000;
+}
+div.modal-body > a{
+	float: right;
+}
+
+
+
+
+div.main-right{
+    margin-bottom: 20px;
+}
+
+
+ul.list{
+	padding : 0 20px 0 20px;
+}

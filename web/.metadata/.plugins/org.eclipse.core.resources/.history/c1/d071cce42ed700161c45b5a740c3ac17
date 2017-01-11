@@ -1,0 +1,173 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class CompanyUser implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3767290096761200218L;
+	private int id;
+	private String name;
+	private String password;
+	private String companyName;
+	private String realName;
+	private String avatar;
+	private String email;
+	private String address;
+	private String QQ;
+	private String tel;
+	private String introduce;
+	private int type;
+	public CompanyUser(){
+		
+	}
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param password
+	 * @param companyName
+	 * @param realName
+	 * @param avatar
+	 * @param email
+	 * @param address
+	 * @param qQ
+	 * @param tel
+	 * @param introduce
+	 * @param type
+	 */
+	public CompanyUser(int id, String name, String password, String companyName, String realName, String avatar,
+			String email, String address, String qQ, String tel, String introduce, int type) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.password = password;
+		this.companyName = companyName;
+		this.realName = realName;
+		this.avatar = avatar;
+		this.email = email;
+		this.address = address;
+		QQ = qQ;
+		this.tel = tel;
+		this.introduce = introduce;
+		this.type = type;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
+	}
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getQQ() {
+		return QQ;
+	}
+
+	public void setQQ(String qQ) {
+		QQ = qQ;
+	}
+
+	public String getTel() {
+		return tel;
+	}
+
+	public void setTel(String tel) {
+		this.tel = tel;
+	}
+
+	public String getIntroduce() {
+		return introduce;
+	}
+
+	public void setIntroduce(String introduce) {
+		this.introduce = introduce;
+	}
+
+	public int getType() {
+		return type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyUser [id=" + id + ", name=" + name + ", password=" + password + ", companyName=" + companyName
+				+ ", realName=" + realName + ", avatar=" + avatar + ", email=" + email + ", address=" + address
+				+ ", QQ=" + QQ + ", tel=" + tel + ", introduce=" + introduce + ", type=" + type + "]";
+	}
+	public void copy(CompanyUser user){
+		this.id = user.id;
+		this.name = user.name;
+		this.password = user.password;
+		this.nickName = user.nickName;
+		this.realName = user.realName;
+		this.type = user.type;
+		this.avatar = user.avatar;
+		this.email = user.email;
+		this.address = user.address;
+		this.QQ = user.QQ;
+		this.tel = user.tel;
+		this.introduce = user.introduce;
+	}
+}

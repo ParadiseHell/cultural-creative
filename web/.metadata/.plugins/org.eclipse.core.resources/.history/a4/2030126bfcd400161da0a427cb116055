@@ -1,0 +1,11 @@
+package com.chengtao.dao;
+
+import java.sql.Connection;
+
+import com.chengtao.pool.ConnectionPool;
+
+public class BaseDao {
+	protected Connection getConnection() {
+		return ConnectionPool.getConnection();
+	}
+}

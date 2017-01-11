@@ -1,0 +1,6 @@
+package com.chengtao.entity;
+
+public class ListInfo {
+	int currentCount;
+	int totalCount;
+}

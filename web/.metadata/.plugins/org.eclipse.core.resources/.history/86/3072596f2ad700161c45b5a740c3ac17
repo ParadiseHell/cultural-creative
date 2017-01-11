@@ -1,0 +1,121 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.chengtao.dao.PersonUserDao;
+import com.chengtao.entity.CompanyUser;
+import com.chengtao.entity.PersonUser;
+
+public class PersonUserImpl extends BaseImpl implements PersonUserDao {
+	// --------------常量
+	private String ID = "id";
+	private String NAME = "name";
+	private String PASSWORD = "password";
+	private String NICK_NAME = "nick_name";
+	private String REAL_NAME = "real_name";
+	private String AVATAR = "avatar";
+	private String TYPE = "type";
+	private String EMAIL = "email";
+	private String ADDRESS = "address";
+	private String QQ = "qq";
+	private String TEL = "tel";
+	private String INTRODUCE = "introduce";
+	// --------------存储过程
+	private final static String SIGN_UP = "call personUserSignUp(?,?)";
+	private final static String LOGIN = "call personUserLogin(?,?)";
+	private final static String UPLOAD_AVATAR = "call uploadPersonUserAvatar(?,?)";
+	private final static String MODIFY = "call modifyPersonUser(?,?,?,?,?,?,?,?,?,?)";
+
+	@Override
+	public PersonUser signUp(String name, String password) {
+		PersonUser user = null;
+		ResultSet set = getResultSet(SIGN_UP, name, password);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("signUp", e);
+		}
+		return user;
+	}
+
+	@Override
+	public PersonUser login(String name, String password) {
+		PersonUser user = null;
+		ResultSet set = getResultSet(LOGIN, name, password);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("login", e);
+		}
+		return user;
+	}
+
+	/**
+	 * 获取基本的用户信息
+	 * 
+	 * @param set
+	 * @return
+	 */
+	private PersonUser getUser(ResultSet set) {
+		PersonUser user = null;
+		try {
+			user = new PersonUser();
+			user.setId(set.getInt(ID));
+			user.setName(set.getNString(NAME));
+			user.setPassword(set.getString(PASSWORD));
+			user.setNickName(set.getString(NICK_NAME));
+			user.setRealName(set.getNString(REAL_NAME));
+			user.setAvatar(set.getNString(AVATAR));
+			user.setType(set.getInt(TYPE));
+			user.setEmail(set.getNString(EMAIL));
+			user.setAddress(set.getNString(ADDRESS));
+			user.setTel(set.getNString(TEL));
+			user.setQQ(set.getNString(QQ));
+			user.setIntroduce(set.getString(INTRODUCE));
+		} catch (SQLException e) {
+			printException("getBaseUser", e);
+		} finally {
+			close(set, null, null);
+		}
+		return user;
+	}
+
+	@Override
+	public boolean uploadAvatar(int id, String avatarPath) {
+		PersonUser user = null;
+		ResultSet set = getResultSet(UPLOAD_AVATAR, id, avatarPath);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("uploadAvatar", e);
+		}
+		return user != null;
+	}
+
+	@Override
+	public PersonUser modify(PersonUser newUser) {
+		PersonUser user = null;
+		ResultSet set = getResultSet(MODIFY,
+				newUser.getId(),newUser.getName(),
+				newUser.getPassword(),newUser.getCompanyName(),
+				newUser.getRealName(),newUser.getEmail(),
+				newUser.getAddress(),newUser.getQQ(),
+				newUser.getTel(),newUser.getIntroduce()
+				);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("modify", e);
+		}
+		return user;
+	}
+}

@@ -1,0 +1,16 @@
+package com.chengtao.impl;
+
+import java.util.ArrayList;
+
+import com.chengtao.dao.ExhibitonDao;
+import com.chengtao.entity.Exhibition;
+
+public class ExhibitionImpl extends BaseImpl implements ExhibitonDao{
+
+	@Override
+	public ArrayList<Exhibition> getAllExhibitions(int limit) {
+		ArrayList<Exhibition> list = new ArrayList<Exhibition>();
+		return list;
+	}
+
+}

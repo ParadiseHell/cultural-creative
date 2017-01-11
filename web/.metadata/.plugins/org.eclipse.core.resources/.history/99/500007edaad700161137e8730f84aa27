@@ -1,0 +1,12 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class Supply implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3424188272329751827L;
+	
+}

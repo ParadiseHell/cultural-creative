@@ -1,0 +1,7 @@
+package com.chengtao.entity;
+
+public class PersonUser {
+	private String name;
+	private String password;
+	
+}

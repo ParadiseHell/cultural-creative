@@ -3,6 +3,8 @@ package com.chengtao.culture.entity;
 import com.chengtao.library.entity.BaseResponse;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,16 +13,28 @@ import java.util.List;
 
 public class News extends BaseResponse{
     private int id;
+    private int companyId;
     private String companyName;
-    private String newsTitle;
-    private long newsTime;
-    private String newsDetail;
-    private List<String> images;
-    private List<Note> notes;
-    private int visitNum;
-    private int operateType;
-    public News() {
+    private String title;
+    private String detail;
+    private ArrayList<String> images;
+    private int visit;
+    private Timestamp creatAt;
+    private Timestamp updateAt;
 
+    public News() {
+    }
+
+    public News(int id, int companyId, String companyName, String title, String detail, ArrayList<String> images, int visit, Timestamp creatAt, Timestamp updateAt) {
+        this.id = id;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.title = title;
+        this.detail = detail;
+        this.images = images;
+        this.visit = visit;
+        this.creatAt = creatAt;
+        this.updateAt = updateAt;
     }
 
     public int getId() {
@@ -31,6 +45,14 @@ public class News extends BaseResponse{
         this.id = id;
     }
 
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
     public String getCompanyName() {
         return companyName;
     }
@@ -39,73 +61,51 @@ public class News extends BaseResponse{
         this.companyName = companyName;
     }
 
-    public String getNewsTitle() {
-        return newsTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setNewsTitle(String newsTitle) {
-        this.newsTitle = newsTitle;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public long getNewsTime() {
-        return newsTime;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setNewsTime(long newsTime) {
-        this.newsTime = newsTime;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
-    public String getNewsDetail() {
-        return newsDetail;
-    }
-
-    public void setNewsDetail(String newsDetail) {
-        this.newsDetail = newsDetail;
-    }
-
-    public List<String> getImages() {
+    public ArrayList<String> getImages() {
         return images;
     }
 
-    public void setImages(List<String> images) {
+    public void setImages(ArrayList<String> images) {
         this.images = images;
     }
 
-    public List<Note> getNotes() {
-        return notes;
+    public int getVisit() {
+        return visit;
     }
 
-    public void setNotes(List<Note> notes) {
-        this.notes = notes;
+    public void setVisit(int visit) {
+        this.visit = visit;
     }
 
-    public int getVisitNum() {
-        return visitNum;
+    public Timestamp getCreatAt() {
+        return creatAt;
     }
 
-    public void setVisitNum(int visitNum) {
-        this.visitNum = visitNum;
+    public void setCreatAt(Timestamp creatAt) {
+        this.creatAt = creatAt;
     }
 
-    public int getOperateType() {
-        return operateType;
+    public Timestamp getUpdateAt() {
+        return updateAt;
     }
 
-    public void setOperateType(int operateType) {
-        this.operateType = operateType;
-    }
-
-    @Override
-    public String toString() {
-        return "News{" +
-                "id=" + id +
-                ", companyName='" + companyName + '\'' +
-                ", newsTitle='" + newsTitle + '\'' +
-                ", newsTime='" + newsTime + '\'' +
-                ", newsDetail='" + newsDetail + '\'' +
-                ", images=" + images +
-                ", notes=" + notes +
-                ", visitNum=" + visitNum +
-                '}';
+    public void setUpdateAt(Timestamp updateAt) {
+        this.updateAt = updateAt;
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.chengtao.culture.App;
 import com.chengtao.culture.R;
 import com.chengtao.culture.fragmentimpl.INews;
 import com.chengtao.culture.presenter.NewsPresenter;
@@ -41,7 +42,6 @@ public class NewsFragment extends IFragment implements INews,RefreshLayout.OnRef
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.addItemDecoration(new ListViewDecoration());// 添加分割线。
-        recyclerView.setSwipeMenuCreator(ItemUtils.getDeleteCollectMenuCreator());
     }
 
     @Override
@@ -89,6 +89,5 @@ public class NewsFragment extends IFragment implements INews,RefreshLayout.OnRef
     @Override
     public void onItemClick(Closeable closeable, int adapterPosition, int menuPosition, int direction) {
         closeable.smoothCloseMenu();
-        newsPresenter.handlerItem(adapterPosition,menuPosition,direction);
     }
 }

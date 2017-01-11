@@ -1,0 +1,22 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+public class Supply implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3424188272329751827L;
+	private int id;
+	private int companyId;
+	private String name;
+	private String detail;
+	private ArrayList<String> images;
+	private int visit;
+	private Timestamp creatAt;
+	private Timestamp updateAt;
+	private Timestamp deadLine;
+}

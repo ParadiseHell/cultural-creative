@@ -1,0 +1,6 @@
+package com.chengtao.dao;
+
+public class BaseDao {
+	
+}
+

@@ -1,0 +1,16 @@
+1483840524493	Delete element
+1483841057012	Delete element
+1483843408790	Copy package
+1483843426252	Delete element
+1483844567494	Rename type 'ParamsUtils'
+1483846186814	Delete elements
+1483846341787	Delete element
+1483847458884	Delete element
+1483847693334	Delete element
+1483858506583	Rename type 'PersonUserServlet'
+1483859228114	Delete element
+1483882574709	Extract method 'handleSignUpOrLogin'
+1484015049219	Rename type 'Info'
+1484015314119	Rename resource 'user.jsp'
+1484023312227	Rename resource 'info.jsp'
+1484023384830	Rename type 'InfoServlet'

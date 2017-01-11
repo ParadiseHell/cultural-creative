@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="0dp"
+    app:cardCornerRadius="8dp"
     >
     <RelativeLayout
         android:orientation="vertical"
@@ -13,7 +13,6 @@
         android:layout_height="105dp">
         <TextView
             android:textSize="18sp"
-            android:text="北京林业大学图书馆"
             android:id="@+id/tv_news_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
@@ -35,7 +34,6 @@
                 android:gravity="center_vertical"
                 android:textSize="14sp"
                 android:layout_marginStart="5dp"
-                android:text="北京林业大学"
                 android:id="@+id/tv_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
@@ -57,7 +55,6 @@
             <TextView
                 android:textSize="14sp"
                 android:layout_marginStart="5dp"
-                android:text="11"
                 android:id="@+id/tv_read"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"
@@ -80,7 +77,6 @@
             <TextView
                 android:textSize="14sp"
                 android:layout_marginStart="5dp"
-                android:text="2016-05-11"
                 android:id="@+id/tv_time"
                 android:gravity="center_vertical"
                 android:layout_width="match_parent"

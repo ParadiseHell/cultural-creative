@@ -1,0 +1,71 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+
+public class Exhibition implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6765864021239180677L;
+	private int id;
+	private int companyId;
+	private String title;
+	private String detail;
+	private ArrayList<String> images;
+	private int visit;
+	private Timestamp creatAt;
+	private Timestamp updateAt;
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public int getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(int companyId) {
+		this.companyId = companyId;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public String getDetail() {
+		return detail;
+	}
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+	public ArrayList<String> getImages() {
+		return images;
+	}
+	public void setImages(ArrayList<String> images) {
+		this.images = images;
+	}
+	public int getVisit() {
+		return visit;
+	}
+	public void setVisit(int visit) {
+		this.visit = visit;
+	}
+	public Timestamp getCreatAt() {
+		return creatAt;
+	}
+	public void setCreatAt(Timestamp creatAt) {
+		this.creatAt = creatAt;
+	}
+	public Timestamp getUpdateAt() {
+		return updateAt;
+	}
+	public void setUpdateAt(Timestamp updateAt) {
+		this.updateAt = updateAt;
+	}
+	
+}

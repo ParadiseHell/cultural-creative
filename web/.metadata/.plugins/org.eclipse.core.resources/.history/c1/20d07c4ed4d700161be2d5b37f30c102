@@ -1,0 +1,74 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.chengtao.dao.DemandDao;
+import com.chengtao.entity.Demand;
+
+public class DemandImpl extends BaseImpl implements DemandDao{
+	private static final String ID = "id";
+	private static final String NAME = "name";
+	private static final String DETAIL = "detail";
+	private static final String IMAGES = "images";
+	private static final String CREATE_AT = "createAt";
+	private static final String UPDATE_AT = "updateAt";
+	private static final String DEAD_LINE = "deadline";
+	private static final String VISIT = "visit";
+	private static final String USER_ID	 = "user_id";
+	private static final String USER_NAME = "user_name";
+	private static final String TOTAL = "total";
+	
+	private static final String GET_ALL_DEMANDS = "call getAllDemands(?)";
+	@Override
+	public ArrayList<Demand> getAllDemands(int limit) {
+		ArrayList<Demand> list = new ArrayList<Demand>();
+		ResultSet set = getResultSet(GET_ALL_DEMANDS, limit);
+		if (set != null) {
+			try {
+				while (set.next()) {
+					Demand demand = getDemand(set);
+					list.add(demand);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				try {
+					set.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+	private Demand getDemand(ResultSet set) {
+		Demand demand = new Demand();
+		try {
+			demand.setId(set.getInt(ID));
+			demand.setName(set.getString(NAME));
+			demand.setDetail(DETAIL);
+			String images = set.getString(IMAGES);
+			if (images != null && !images.equals("")) {
+				String mImages[] = images.split(",");
+				demand.setImages((ArrayList<String>)Arrays.asList(mImages));
+			}
+			try {
+				
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			demand.setCreatAt(set.getTimestamp(CREATE_AT));
+			demand.setUpdateAt(set.getTimestamp(UPDATE_AT));
+			demand.setDeadLine(set.getTimestamp(DEAD_LINE));
+			demand.setVisit(set.getInt(VISIT));
+			demand.setUserId(set.getInt(USER_ID));
+		} catch (Exception e) {
+			printException("getDemand", e);
+		}
+		return demand;
+	}
+
+}

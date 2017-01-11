@@ -1,0 +1,20 @@
+package com.chengtao.dao;
+
+import java.sql.Connection;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class BaseDao {
+	private static final String MYSQL_NAME = "MySQL";
+	private static ComboPooledDataSource source = null;
+	static{
+		try {
+			source = new ComboPooledDataSource(MYSQL_NAME);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	public static Connection getConnection() throws SQLException {
+		return source.getConnection();
+	}
+}

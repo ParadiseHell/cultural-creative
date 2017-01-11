@@ -1,0 +1,65 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import com.chengtao.dao.ExhibitonDao;
+import com.chengtao.entity.Exhibition;
+
+public class ExhibitionImpl extends BaseImpl implements ExhibitonDao{
+	private static final String ID = "id";
+	private static final String COMPANY_ID = "company_id";
+	private static final String COMPANY_NAME = "visit";
+	private static final String THEME = "theme";
+	private static final String CREATE_AT = "createAt";
+	private static final String UPDATE_AT = "updateAt";
+	private static final String DETAIL = "detail";
+	private static final String IMAGES = "images";
+	private static final String VISIT = "visit";
+	private static final String GET_ALL_EXHIBITON = "call getAllExhibitions(?)";
+	@Override
+	public ArrayList<Exhibition> getAllExhibitions(int limit) {
+		ArrayList<Exhibition> list = new ArrayList<Exhibition>();
+		ResultSet set = getResultSet(GET_ALL_EXHIBITON, limit);
+		if (set != null) {
+			try {
+				while (set.next()) {
+					list.add(getExhibiton(set));
+				}
+			} catch (SQLException e) {
+				printException("getAllNews", e);
+			}finally {
+				try {
+					set.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return list;
+	}
+	private Exhibition getExhibiton(ResultSet set) {
+		Exhibition exhibition = new Exhibition();
+		try {
+			exhibition.setId(set.getInt(ID));
+			exhibition.setCompanyId(set.getInt(COMPANY_ID));
+			exhibition.setTheme(set.getString(THEME));
+			exhibition.setCreatAt(set.getTimestamp(CREATE_AT));
+			exhibition.setUpdateAt(set.getTimestamp(UPDATE_AT));
+			exhibition.setDetail(set.getString(DETAIL));
+			String images = set.getString(IMAGES);
+			if (images != null && !images.equals("")) {
+				String mImages[] = images.split(",");
+				exhibition.setImages((ArrayList<String>)Arrays.asList(mImages));
+			}
+			exhibition.setVisit(set.getInt(VISIT));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return exhibition;
+	}
+
+}

@@ -1,0 +1,16 @@
+package com.chengtao.dao;
+
+public class BaseDao {
+	private static final String MYSQL_NAME = "MySQL";
+	private static ComboPooledDataSource source = null;
+	static{
+		try {
+			source = new ComboPooledDataSource(MYSQL_NAME);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+	public static Connection getConnection() throws SQLException {
+		return source.getConnection();
+	}
+}

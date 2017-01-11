@@ -1,0 +1,316 @@
+<%@page import="com.chengtao.entity.TabType"%>
+<%@page import="com.chengtao.entity.Demand"%>
+<%@page import="com.chengtao.entity.Supply"%>
+<%@page import="com.chengtao.entity.Exhibition"%>
+<%@page import="com.chengtao.entity.News"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="com.chengtao.entity.UserType"%>
+<%@page import="com.chengtao.entity.CompanyUser"%>
+<%@page import="com.chengtao.entity.PersonUser"%>
+<%@page import="com.chengtao.utils.ParamUtils"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+   <%
+   		Object user = request.getAttribute(ParamUtils.ENTITY_USER);
+   		PersonUser personUser = null;
+   		CompanyUser companyUser = null;
+   		UserType type = UserType.Visitor;
+   		if(user instanceof PersonUser){
+   			personUser = (PersonUser)user;
+   			if(personUser != null){
+   				type = UserType.PersonUser;
+   			}
+   		}else{
+   			companyUser = (CompanyUser)user;
+   			if(companyUser != null){
+   				type = UserType.CompanyUser;
+   			}
+   		}
+   		ArrayList<News> news = new ArrayList<>();
+   		ArrayList<Exhibition> exhibitions = new ArrayList<>();
+   		ArrayList<Supply> supplies = new ArrayList<>();
+   		ArrayList<Demand> demands = new ArrayList<>();
+   		TabType tab = TabType.NEWS;
+   		int currentPage = 1;
+   		Object n = request.getAttribute(ParamUtils.ENTITY_NEWS);
+   		Object e = request.getAttribute(ParamUtils.ENTITY_EXHIBITON);
+   		Object s = request.getAttribute(ParamUtils.ENTITY_SUPPLY);
+   		Object d = request.getAttribute(ParamUtils.ENTITY_DEMAND);
+   		Object t = request.getAttribute(ParamUtils.ENTITY_TAB);
+   		Object cp = request.getAttribute(ParamUtils.ENTITY_PAGE);
+   		if(n != null){
+   			news = (ArrayList<News>)n;
+   		}
+   		if(e != null){
+   			exhibitions = (ArrayList<Exhibition>)e;
+   		}
+   		if(s != null){
+   			supplies = (ArrayList<Supply>)s;
+   		}
+   		if(d != null){
+   			demands = (ArrayList<Demand>)d;
+   		}
+   		if(t != null){
+   			tab = (TabType)t;
+   		}
+   		if(cp != null){
+   			currentPage = (int)cp;
+   		}
+   		
+   %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/css/main.css">
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/javascript/jquery.min.js"></script>
+<script type="text/javascript"
+	src="<%=request.getContextPath()%>/javascript/bootstrap.min.js"></script>
+<title>文化创意</title>
+</head>
+<body>
+	<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed"
+				data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="<%=request.getContextPath()%>">文化创意</a>
+		</div>
+		<div class="collapse navbar-collapse"
+			id="bs-example-navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+		        <li class="dropdown">
+		          <a href="#" class="dropdown-toggle" data-toggle="dropdown">管理<span class="caret"></span></a>
+		          <ul class="dropdown-menu" role="menu">
+		          	<%if(type != UserType.Visitor){%>
+		          		<li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_USER_INFO%>">个人信息</a></li>
+		          		<li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_USER_LOGOUT%>">注销</a></li>
+		          	<%}%>
+		          	<%if(type == UserType.Visitor){ %>
+		            	<li><a href="<%=request.getContextPath()%><%=ParamUtils.VIEW_LOGIN%>">登录</a></li>
+					<%}%>
+		          </ul>
+		        </li>
+		      </ul>
+		</div>
+	</div>
+	</nav>
+	<div class="container user-main">
+		<div class="row">
+			<div class="col-md-3 user-left">
+				<%
+				switch(type){
+				case Visitor:
+					out.println("<img src=\""+request.getContextPath()+"/images/ct.jpg\" class=\"img-responsive img-rounded\"/>");
+					break;
+				case PersonUser:
+					if(personUser != null){
+						if(personUser.getAvatar() != null){
+							out.println("<img src=\""+personUser.getAvatar() +"\""+" class=\"img-responsive img-rounded\"/>");
+						}else{
+							out.println("<img src=\""+request.getContextPath()+"/images/ct.jpg\" class=\"img-responsive img-rounded\"/>");
+						}
+					}
+					break;
+				case CompanyUser:
+					if(companyUser != null){
+						if(companyUser.getAvatar() != null){
+							out.println("<img src=\""+companyUser.getAvatar()+"\""+" class=\"img-responsive img-rounded\"/>");
+						}else{
+							out.println("<img src=\""+request.getContextPath()+"/images/ct.jpg\" class=\"img-responsive img-rounded\"/>");
+						}
+					}
+					break;
+				}
+				%>
+				<p class="name">
+				<%
+				switch(type){
+					case Visitor:
+						out.println("游客");
+						out.println("<p class=\"text-muted\">我只是一个游客而已</p>");
+						break;
+					case PersonUser:
+						if(personUser != null){
+							out.println(personUser.getName());
+							if(personUser.getIntroduce() != null){
+								out.println("<p class=\"text-muted\">"+personUser.getIntroduce()+"</p>");
+							}
+						}
+						break;
+					case CompanyUser:
+						if(companyUser != null){
+							out.println(companyUser.getName());
+							if(companyUser.getIntroduce() != null){
+								out.println("<p class=\"text-muted\">"+companyUser.getIntroduce()+"</p>");
+							}
+						}
+						break;
+				}
+				%>
+				</p>
+				<hr/>
+				<%
+					switch(type){
+						case PersonUser:
+							if(personUser != null){
+								if(personUser.getEmail() != null){
+									out.print("<p><span>邮箱:</span>"+personUser.getEmail()+"</p>");
+								}
+								if(personUser.getTel() != null){
+									out.print("<p><span>电话:</span></span>"+personUser.getTel()+"</p>");
+								}
+								if(personUser.getAddress() != null){
+									out.print("<p><span>地址:</span>"+personUser.getAddress()+"</p>");
+								}
+							}
+							break;
+						case CompanyUser:
+							if(companyUser != null){
+								if(companyUser.getEmail() != null){
+									out.print("<p><span>邮箱:</span>"+companyUser.getEmail()+"</p>");
+								}
+								if(companyUser.getTel() != null){
+									out.print("<p><span>电话:</span></span>"+companyUser.getTel()+"</p>");
+								}
+								if(companyUser.getAddress() != null){
+									out.print("<p><span>地址:</span>"+companyUser.getAddress()+"</p>");
+								}
+							}
+							break;
+					}
+				%>
+			</div>
+			<div class="col-md-9 user-right">
+				<ol class="breadcrumb">
+				  <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=ParamUtils.TAB_NEWS%>">所有资讯</a></li>
+				  <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=ParamUtils.TAB_EXHIBITON%>">所有展会</a></li>
+				  <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=ParamUtils.TAB_SUPPLY%>">所有供应</a></li>
+				  <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=ParamUtils.TAB_DEMAND%>">所有需求</a></li>
+				</ol>
+				<ul class="list-unstyled list">
+					<%
+					String mTab = "";
+					int total = 0;
+					switch(tab){
+						case NEWS:
+							mTab = ParamUtils.TAB_NEWS;
+							if(news != null && news.size() > 0){
+								total = news.get(0).getTotal();
+								for(News news2 : news){
+									%>
+									<li>
+										<div class="media">
+										  <div class="media-body">
+										    <h4 class="media-heading"><a href="#" class="lead"><%=news2.getTitle()%></a></h4>
+										    <p>发布企业:<%=news2.getCompanyName() %></p>
+										    <p>发布时间:<%=news2.getUpdateAt() %></p>
+										    <p>访问数量:<%=news2.getVisit() %></p>
+										  </div>
+										</div>
+									</li>
+									<hr>
+								<%}
+							}
+							break;
+						case EXHIBITON:
+							mTab = ParamUtils.TAB_EXHIBITON;
+							if(exhibitions != null && exhibitions.size() > 0){
+								total = exhibitions.get(0).getTotal();
+								for(Exhibition ex : exhibitions){
+									%>
+									<li>
+										<div class="media">
+										  <div class="media-body">
+										    <h4 class="media-heading"><a href="#" class="lead"><%=ex.getTheme()%></a></h4>
+										    <p>发布企业:<%=ex.getCompanyName() %></p>
+										    <p>发布时间:<%=ex.getUpdateAt() %></p>
+										    <p>访问数量:<%=ex.getVisit() %></p>
+										  </div>
+										</div>
+									</li>
+									<hr>
+								<%}
+							}
+							break;
+						case SUPPLY:
+							mTab = ParamUtils.TAB_SUPPLY;
+							if(supplies != null && supplies.size() > 0){
+								for(Supply su : supplies){
+									%>
+									<li>
+										<div class="media">
+										  <div class="media-body">
+										    <h4 class="media-heading"><a href="#" class="lead"><%= su.getName() %></a></h4>
+										    <p>发布企业:CT</p>
+										    <p>发布时间:<%=su.getUpdateAt() %></p>
+										    <p>访问数量:<%=su.getVisit() %></p>
+										  </div>
+										</div>
+									</li>
+									<hr>
+								<%}
+							}
+							break;
+						case DEMAND:
+							mTab = ParamUtils.TAB_DEMAND;
+							if(demands != null && demands.size() > 0){
+								for(Demand de : demands){
+									%>
+									<li>
+										<div class="media">
+										  <div class="media-body">
+										    <h4 class="media-heading"><a href="#" class="lead"><%=de.getName()%></a></h4>
+										    <p>发布企业:CT</p>
+										    <p>发布时间:<%=de.getUpdateAt() %></p>
+										    <p>访问数量:<%=de.getVisit() %></p>
+										  </div>
+										</div>
+									</li>
+									<hr>
+								<%}
+							}
+							break;
+					}
+					
+					%>
+				</ul>	
+				<nav>
+				  <ul class="pagination" style="margin:10 auto">
+				  	<%
+			  		if(currentPage == 1){%>
+			  			 <li class="disabled"><span>首页</span></li>
+			  		<%}else{%>
+				  		 <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=mTab%>&<%=ParamUtils.PAGE%>=1">首页</a></li>
+				  	<%}%>
+				  	<%
+				  	for(int i = currentPage - 1; i >= currentPage - 2; i--){%>
+				  		<li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=mTab%>&<%=ParamUtils.PAGE%>=<%=i%>">尾页</a></li>
+				  	<%}
+				  	%>
+				    <li class="active"><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=mTab%>&<%=ParamUtils.PAGE%>=<%=currentPage%>"><%=currentPage %></a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				    <li><a href="#">4</a></li>
+				    <li><a href="#">5</a></li>
+				    <li><a href="<%=request.getContextPath()%><%=ParamUtils.SERVLET_ACTIVITY%>?<%=ParamUtils.TAB%>=<%=mTab%>&<%=ParamUtils.PAGE%>=1">尾页</a></li>
+				  </ul>
+				</nav>	    
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript"
+	src="<%=request.getContextPath()%>/javascript/index.js"></script>
+</body>
+</html>

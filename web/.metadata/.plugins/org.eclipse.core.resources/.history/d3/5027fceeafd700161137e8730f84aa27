@@ -1,0 +1,47 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.chengtao.dao.ExhibitonDao;
+import com.chengtao.entity.Exhibition;
+
+public class ExhibitionImpl extends BaseImpl implements ExhibitonDao{
+	private static final String ID = "id";
+	private static final String COMPANY_ID = "id";
+	private static final String THEME = "id";
+	private static final String CREATE_AT = "id";
+	private static final String UPDATE_AT = "id";
+	private static final String DETAIL = "id";
+	private static final String IMAGES = "id";
+	private static final String VISIT = "id";
+	private static final String GET_ALL_EXHIBITON = "getAllExhibition(?)";
+	@Override
+	public ArrayList<Exhibition> getAllExhibitions(int limit) {
+		ArrayList<Exhibition> list = new ArrayList<Exhibition>();
+		ResultSet set = getResultSet(GET_ALL_EXHIBITON, limit);
+		if (set != null) {
+			try {
+				while (set.next()) {
+					list.add(getExhibiton(set));
+				}
+			} catch (SQLException e) {
+				printException("getAllNews", e);
+			}finally {
+				try {
+					set.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		return list;
+	}
+	private Exhibition getExhibiton(ResultSet set) {
+		Exhibition exhibition = new Exhibition();
+		return null;
+	}
+
+}

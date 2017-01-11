@@ -5,5 +5,5 @@ package com.chengtao.culture.activityimpl;
  */
 
 public interface IMain extends IBase{
-
+    void initUserInfo(Object user);
 }

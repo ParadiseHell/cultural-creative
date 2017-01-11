@@ -1,0 +1,14 @@
+$(document).ready(function() {
+	$('#culture-tab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	});
+});
+
+$('#myStateButton').on('click', function () {
+    $(this).button('complete') // button text will be "finished!"
+});
+
+$('#myStateButton').on('click', function () {
+    $(this).button('complete') // button text will be "finished!"
+});

@@ -3,11 +3,19 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:padding="16dp"
     android:layout_height="match_parent">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SupplyDemand"/>
+    <com.chengtao.culture.view.RefreshLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_supply">
+        <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
+            android:id="@+id/rv_supply"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.chengtao.culture.view.RefreshLayout>
     <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btn_supply_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

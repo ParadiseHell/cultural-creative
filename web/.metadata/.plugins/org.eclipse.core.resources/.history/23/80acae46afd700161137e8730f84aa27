@@ -1,0 +1,38 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import com.chengtao.dao.NewsDao;
+import com.chengtao.entity.News;
+
+public class NewsImpl extends BaseImpl implements NewsDao{
+	private static final String ID = "id";
+	private static final String COMPANY_ID = "id";
+	private static final String TITLE = "id";
+	private static final String CREATE_AT = "id";
+	private static final String UPDATE_AT = "id";
+	private static final String DETAIL = "id";
+	private static final String IMAGES = "id";
+	private static final String VISIT = "id";
+	private static final String GET_ALL_NEWS = "getAllNews(?)";
+	@Override
+	public ArrayList<News> getAllNews(int limit) {
+		ArrayList<News> list = new ArrayList<News>();
+		ResultSet set = getResultSet(GET_ALL_NEWS, limit);
+		if (set != null) {
+			try {
+				while (set.next()) {
+					
+				}
+			} catch (SQLException e) {
+				printException("getAllNews", e);
+			}finally {
+				set.close();
+			}
+		}
+		return list;
+	}
+
+}

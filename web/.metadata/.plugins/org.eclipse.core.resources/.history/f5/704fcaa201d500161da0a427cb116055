@@ -1,0 +1,107 @@
+package com.chengtao.impl;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.chengtao.pool.ConnectionPool;
+
+public class BaseImpl {
+	protected Connection getConnection() {
+		try {
+			return ConnectionPool.getConnection();
+		} catch (SQLException e) {
+			printStr(e.getMessage());
+			return null;
+		}
+	}
+
+	protected void printStr(String s) {
+		if (!(s == null || s.equals(""))) {
+			System.out.println(s);
+		}
+	}
+
+	/**
+	 * 关闭资源
+	 * 
+	 * @param set
+	 *            ResultSet
+	 * @param statement
+	 *            Statement
+	 * @param connection
+	 *            Connection
+	 */
+	protected void close(ResultSet set, Statement statement, Connection connection) {
+		if (set != null) {
+			try {
+				set.close();
+			} catch (SQLException e) {
+				printException("close", e);
+			}
+		}
+		if (statement != null) {
+			try {
+				statement.close();
+			} catch (SQLException e) {
+				printException("close", e);
+			}
+		}
+		if (connection != null) {
+			try {
+				connection.close();
+			} catch (SQLException e) {
+				printException("close", e);
+			}
+		}
+	}
+
+	/**
+	 * 打印异常
+	 * 
+	 * @param method
+	 *            方法名
+	 * @param e
+	 *            异常
+	 */
+	protected void printException(String method, Exception e) {
+		printStr(method + "-----------------------------");
+		if (e instanceof SQLException) {
+			printStr("SQLState:" + ((SQLException) e).getSQLState());
+		}
+		printStr("Message:" + e.getMessage());
+	}
+
+	/**
+	 * 初始化Statement
+	 * 
+	 * @param statement
+	 *            Statement
+	 * @param procedureStr
+	 *            储存过程
+	 * @param params
+	 *            参数
+	 */
+	protected ResultSet initStatement(Connection connection,PreparedStatement statement, String procedureStr, Object... params) {
+		ResultSet set = null;
+		try {
+			connection = getConnection();
+			statement = connection.prepareStatement(procedureStr);
+			for (int i = 0; i < params.length; i++) {
+				if (params[i] instanceof Integer) {
+					statement.setInt(i + 1, (Integer) params[i]);
+				} else if (params[i] instanceof String) {
+					statement.setString(i + 1, (String) params[i]);
+				} else if (params[i] instanceof Boolean) {
+					statement.setBoolean(i + 1, (Boolean) params[i]);
+				} else if (params[i] instanceof Long) {
+					statement.setLong(i + 1, (Long) params[i]);
+				}
+			}
+		} catch (Exception e) {
+			printException("initStatement", e);
+		}
+	}
+}

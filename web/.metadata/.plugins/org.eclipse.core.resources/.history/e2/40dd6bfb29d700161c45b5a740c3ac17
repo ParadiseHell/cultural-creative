@@ -1,0 +1,106 @@
+package com.chengtao.impl;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.chengtao.dao.CompanyUserDao;
+import com.chengtao.entity.CompanyUser;
+
+public class CompanyImpl extends BaseImpl implements CompanyUserDao {
+	// --------------常量
+	private String ID = "id";
+	private String NAME = "name";
+	private String PASSWORD = "password";
+	private String COMPANY_NAME = "company_name";
+	private String REAL_NAME = "real_name";
+	private String AVATAR = "avatar";
+	private String TYPE = "type";
+	private String EMAIL = "email";
+	private String ADDRESS = "address";
+	private String QQ = "qq";
+	private String TEL = "tel";
+	private String INTRODUCE = "introduce";
+	// --------------存储过程
+	private final static String SIGN_UP = "call companyUserSignUp(?,?)";
+	private final static String LOGIN = "call companyUserLogin(?,?)";
+	private final static String UPLOAD_AVATAR = "call uploadCompanyUserAvatar(?,?)";
+	private final static String MODIFY = "call modifyCompanyUser(?,?,?,?,?,?,?,?,?,?)";
+	
+	@Override
+	public CompanyUser signUp(String name, String password) {
+		CompanyUser user = null;
+		ResultSet set = getResultSet(SIGN_UP, name, password);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("signUp", e);
+		}
+		return user;
+	}
+
+	@Override
+	public CompanyUser login(String name, String password) {
+		CompanyUser user = null;
+		ResultSet set = getResultSet(LOGIN, name, password);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("signUp", e);
+		}
+		return user;
+	}
+
+	/**
+	 * 获取基本的用户信息
+	 * 
+	 * @param set
+	 * @return
+	 */
+	private CompanyUser getUser(ResultSet set) {
+		CompanyUser user = null;
+		try {
+			user = new CompanyUser();
+			user.setId(set.getInt(ID));
+			user.setName(set.getNString(NAME));
+			user.setPassword(set.getString(PASSWORD));
+			user.setCompanyName(set.getString(COMPANY_NAME));
+			user.setRealName(set.getNString(REAL_NAME));
+			user.setAvatar(set.getNString(AVATAR));
+			user.setType(set.getInt(TYPE));
+			user.setEmail(set.getNString(EMAIL));
+			user.setAddress(set.getNString(ADDRESS));
+			user.setTel(set.getNString(TEL));
+			user.setQQ(set.getNString(QQ));
+			user.setIntroduce(set.getString(INTRODUCE));
+		} catch (SQLException e) {
+			printException("getBaseUser", e);
+		} finally {
+			close(set, null, null);
+		}
+		return user;
+	}
+
+	@Override
+	public boolean uploadAvatar(int id, String avatarPath) {
+		CompanyUser user = null;
+		ResultSet set = getResultSet(UPLOAD_AVATAR, id, avatarPath);
+		try {
+			if (set != null && set.next()) {
+				user = getUser(set);
+			}
+		} catch (SQLException e) {
+			printException("uploadAvatar", e);
+		}
+		return user != null;
+	}
+
+	@Override
+	public CompanyUser modify(CompanyUser newUser) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+}

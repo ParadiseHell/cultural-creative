@@ -1,0 +1,20 @@
+$(document).ready(function() {
+	$('#culture-tab a').click(function (e) {
+	  e.preventDefault()
+	  $(this).tab('show')
+	});
+	$('#myStateButton').on('click', function () {
+		$(this).button('toggle');
+		$(this).text('toggle');
+	    $("#form-p").css("display","none");
+	    $("#form-p-again").css("display","none");
+	    $("#btn-form-modify").css("display","none");
+	});
+
+	$('#btn-modify').on('click', function () {
+		$(this).button('toggle');
+		$("#form-p").css("display","block");
+	    $("#form-p-again").css("display","block");
+	});
+});
+

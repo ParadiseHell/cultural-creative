@@ -1,0 +1,7 @@
+package com.chengtao.entity;
+
+import java.io.Serializable;
+
+public class WebTip implements Serializable{
+
+}

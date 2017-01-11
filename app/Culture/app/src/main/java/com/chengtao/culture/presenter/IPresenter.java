@@ -26,12 +26,17 @@ abstract class IPresenter extends BasePresenter{
 
     @Override
     public void onRequestSuccess(int requestId, BaseResponse response) {
-        IResponse response1 = (IResponse) response;
+        Log.e("TAG",this.getClass().toString());
         Log.e("TAG","onRequestSuccess");
-        onIRequestSuccess(requestId,response1);
+        if (response != null) {
+            onIRequestSuccess(requestId, (IResponse) response);
+        }else {
+            onRequestFail(requestId,null);
+        }
     }
     @Override
     public void onRequestFail(int requestId, Throwable throwable) {
+        Log.e("TAG",this.getClass().toString());
         if (throwable == null || throwable.getMessage() == null){
             throwable = new Throwable("请求超时");
             onIRequestFail(requestId,throwable);
